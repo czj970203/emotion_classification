@@ -1,23 +1,13 @@
 from flask import render_template, Response
-import cv2
+from app.models import VideoCamera
 from app import app
 from backend import cv_capture
+import cv2
+import os
 
-
-class VideoCamera(object):
-    def __init__(self):
-        # 通过opencv获取实时视频流
-        self.video = cv2.VideoCapture(0)
-
-    def __del__(self):
-        self.video.release()
-
-    def get_frame(self):
-        success, image = self.video.read()
-        # 因为opencv读取的图片并非jpeg格式，因此要用motion JPEG模式需要先将图片转码成jpg格式图片
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
-
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 cap = VideoCamera()
 is_closed = False
@@ -54,6 +44,13 @@ def open_video():
     is_closed = False
     return render_template('index.html', is_closed=is_closed)
 
-@app.route('/analysis')
+@app.route('/analysis', methods=['GET', 'POST'])
 def analysis():
-    
+    ret, img = cap.read()
+    img = cv_capture.discern(img)
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    write_path = os.path.join(basedir, 'static/cached_images.jpg')
+    address = 'static/cached_images.jpg'
+    cv2.imwrite(write_path, img)
+    return render_template('index.html', address=address)
+

@@ -1,5 +1,9 @@
 from flask import Flask
+from datetime import timedelta
 
 app = Flask(__name__)
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-from app import routes
+from app import routes_for_camera
