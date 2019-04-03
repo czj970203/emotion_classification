@@ -1,6 +1,7 @@
 from flask import render_template, Response
 import cv2
 from app import app
+from backend import cv_capture
 
 
 class VideoCamera(object):
@@ -52,3 +53,7 @@ def open_video():
     cap.__init__()
     is_closed = False
     return render_template('index.html', is_closed=is_closed)
+
+@app.route('/analysis')
+def analysis():
+    
