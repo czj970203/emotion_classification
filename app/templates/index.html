@@ -1,10 +1,14 @@
 <html>
-  <head>
-    <title>摄像头调试</title>
-  </head>
-  <body>
-    <h1>Video Streaming Demonstration</h1>
-    <img src="{{ url_for('video_feed') }}" width="60%" height="40%">
-    <button><a href="{{ url_for('close_video') }}">关闭摄像头</a></button>
-  </body>
+    <head>
+        <title>摄像头调试</title>
+    </head>
+    <body>
+        <h1>Video Streaming Demonstration</h1>
+        <img src="{{ url_for('video_feed') }}" width="60%" height="40%" alt="请开启摄像头">
+        {% if is_closed %}
+        <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>
+        {% else %}
+        <button><a href="{{ url_for('close_video') }}">关闭摄像头</a></button>
+        {% endif %}
+    </body>
 </html>

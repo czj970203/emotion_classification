@@ -19,6 +19,7 @@ class VideoCamera(object):
 
 
 cap = VideoCamera()
+is_closed = False
 
 @app.route('/')
 @app.route('/index')
@@ -43,4 +44,11 @@ def video_feed():
 @app.route('/close_video')
 def close_video():
     cap.__del__()
-    return render_template('index.html')
+    is_closed = True
+    return render_template('index.html', is_closed=is_closed)
+
+@app.route('/open_video')
+def open_video():
+    cap.__init__()
+    is_closed = False
+    return render_template('index.html', is_closed=is_closed)
