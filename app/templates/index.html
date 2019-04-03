@@ -9,9 +9,12 @@
         <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>
         {% else %}
         <button><a href="{{ url_for('close_video') }}">关闭摄像头</a></button>
-        {% endif %}
-
         <button><a href="{{ url_for('analysis') }}">截取屏幕</a></button>
+        {% if is_uploaded %}
+        <button><a href="{{ url_for('gen_bar') }}">分析表达力</a></button>
+        {% endif %}
         <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
+        <img src="{{ bar_addr }}" width="50%" height="40%" alt="无识别目标">
+        {% endif %}
     </body>
 </html>
