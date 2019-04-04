@@ -47,8 +47,11 @@ def classify(img):
         gray_face = gray_face / 255.0
         gray_face = np.expand_dims(gray_face, 0)
         gray_face = np.expand_dims(gray_face, -1)
-        custom = emotion_classifier.predict(gray_face)
+        global emo
+        # 统一初始化的版本
+        custom = emo.emotion_classifier.predict(gray_face)
         emotion_analysis(custom[0])
+        keras.backend.clear_session()
 
 
 def emotion_analysis(emotions):
