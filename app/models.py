@@ -1,6 +1,5 @@
 import cv2
 import os
-
 import tensorflow as tf
 
 class VideoCamera(object):

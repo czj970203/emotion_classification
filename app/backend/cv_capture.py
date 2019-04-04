@@ -7,9 +7,8 @@ import keras
 
 
 emo = EmotionClassifier()
-
+# 最大的玄学：热启动
 hot = np.zeros((1, 48, 48, 1))
-
 print(emo.emotion_classifier.predict(hot))
 
 
@@ -64,27 +63,9 @@ def emotion_analysis(emotions):
     plt.bar(y_pos, emotions, align='center', alpha=0.5)
     plt.xticks(y_pos, objects)
     plt.ylabel('percentage')
-    plt.title('emotion')
+    plt.title('emotions')
     root = os.getcwd()
     save_path = os.path.join(root, 'app/static/barchart.jpg')
     plt.savefig(save_path)
     plt.close()
 
-
-
-'''
-# 获取摄像头0表示第一个摄像头
-cap = cv2.VideoCapture("/Users/chenzejun/desktop/HCI最终版.mp4")
-startTime = time.time()
-while (1):  # 逐帧显示
-    ret, img = cap.read()
-    nowTime = time.time()
-    cv2.imshow("Image", img)
-    diff = round(nowTime - startTime, 3) * 1000
-    if(diff % 1000 <= 200):
-        discern(img)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-cap.release()  # 释放摄像头
-cv2.destroyAllWindows()  # 释放窗口资源
-'''

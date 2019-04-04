@@ -11,8 +11,6 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
-
-
 cap = VideoCamera()
 #原始图片
 image = ''
