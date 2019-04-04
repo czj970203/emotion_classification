@@ -1,7 +1,9 @@
 import cv2
 import os
 import numpy as np
+from keras.models import load_model
 import matplotlib.pyplot as plt
+
 from app.models import EmotionClassifier
 import keras
 
@@ -12,13 +14,14 @@ hot = np.zeros((1, 48, 48, 1))
 print(emo.emotion_classifier.predict(hot))
 
 
+
 def preprocess(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     basedir = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(basedir, 'haarcascade_frontalface_alt2.xml')
     cap = cv2.CascadeClassifier(file_path)
     faceRects = cap.detectMultiScale(
-        gray, scaleFactor=1.2, minNeighbors=3, minSize=(48, 48))
+        gray, scaleFactor=1.2, minNeighbors=3, minSize=(50, 50))
     return gray, faceRects
 
 
@@ -32,31 +35,22 @@ def discern(img):
     return img
 
 
-#对表情进行分类
 def classify(img):
     gray, faceRects = preprocess(img)
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    file_path = os.path.join(basedir, 'simple_CNN.530-0.65.hdf5')
     color = (255, 0, 0)
+    emotion_classifier = load_model(file_path)
     for(x, y, w, h) in faceRects:
         gray_face = gray[(y):(y + h), (x):(x + w)]
         gray_face = cv2.resize(gray_face, (48, 48))
         gray_face = gray_face / 255.0
         gray_face = np.expand_dims(gray_face, 0)
         gray_face = np.expand_dims(gray_face, -1)
-        global emo
-        #统一初始化的版本
-        custom = emo.emotion_classifier.predict(gray_face)
-        '''
-        #分散初始化的版本
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        #model_path = os.path.join(basedir, 'model_trial.h5')
-        model_path = os.path.join(basedir, 'simple_CNN.530-0.65.hdf5')
-        emotion_classifier = keras.models.load_model(model_path)
         custom = emotion_classifier.predict(gray_face)
-        '''
         emotion_analysis(custom[0])
-        keras.backend.clear_session()
 
-#画柱状图
+
 def emotion_analysis(emotions):
     objects = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
     y_pos = np.arange(len(objects))
@@ -67,5 +61,4 @@ def emotion_analysis(emotions):
     root = os.getcwd()
     save_path = os.path.join(root, 'app/static/barchart.jpg')
     plt.savefig(save_path)
-    plt.close()
 
