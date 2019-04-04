@@ -1,14 +1,17 @@
 import os
-
 import cv2
 from flask import render_template, Response
 from app import app
 from app.backend import cv_capture
 from app.models import VideoCamera
+import keras
 
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+
+
 
 cap = VideoCamera()
 #原始图片
@@ -75,10 +78,12 @@ def analysis():
 
 @app.route('/gen_bar')
 def gen_bar():
+    keras.backend.clear_session()
     cv_capture.classify(image)
     bar_addr = 'static/barchart.jpg'
+    address = 'static/cached_images.jpg'
     global is_uploaded
     is_uploaded=False
-    return render_template('index.html', bar_addr=bar_addr, is_uploaded=is_uploaded)
+    return render_template('index.html', address=address, bar_addr=bar_addr, is_uploaded=is_uploaded)
 
 
