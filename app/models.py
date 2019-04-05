@@ -1,7 +1,7 @@
 import cv2
 
 import os
-import tensorflow as tf
+from keras.models import load_model
 
 
 class VideoCamera(object):
@@ -27,4 +27,4 @@ class EmotionClassifier(object):
     def __init__(self):
         basedir = os.path.abspath(os.path.dirname(__file__))
         model_path = os.path.join(basedir, 'backend/simple_CNN.530-0.65.hdf5')
-        self.emotion_classifier = tf.keras.models.load_model(model_path)
+        self.emotion_classifier = load_model(model_path)

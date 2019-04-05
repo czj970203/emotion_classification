@@ -33,8 +33,8 @@ def gen(camera):
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        global is_stopped, is_closed
         if is_closed == True:
-            global is_stopped, is_closed_
             is_stopped = True
             break
 
@@ -64,6 +64,7 @@ def open_video():
 def analysis():
     ret, img = cap.read()
     global image
+    #暂存原图
     image = img
     img = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))

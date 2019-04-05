@@ -1,9 +1,7 @@
 import cv2
 import os
 import numpy as np
-from keras.models import load_model
 import matplotlib.pyplot as plt
-
 from app.models import EmotionClassifier
 import keras
 
@@ -37,10 +35,7 @@ def discern(img):
 
 def classify(img):
     gray, faceRects = preprocess(img)
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(basedir, 'simple_CNN.530-0.65.hdf5')
     color = (255, 0, 0)
-    emotion_classifier = load_model(file_path)
     for(x, y, w, h) in faceRects:
         gray_face = gray[(y):(y + h), (x):(x + w)]
         gray_face = cv2.resize(gray_face, (48, 48))
@@ -64,4 +59,4 @@ def emotion_analysis(emotions):
     root = os.getcwd()
     save_path = os.path.join(root, 'app/static/barchart.jpg')
     plt.savefig(save_path)
-
+    plt.close()
