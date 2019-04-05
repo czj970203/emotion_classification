@@ -3,13 +3,19 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from app.models import EmotionClassifier
+
+
+#用keras自带的后端来清理缓存，不能用tensorflow的！！！
 import keras
+
 
 
 emo = EmotionClassifier()
 # 最大的玄学：热启动
+
 hot = np.zeros((1, 48, 48, 1))
 print(emo.emotion_classifier.predict(hot))
+
 
 
 
@@ -19,7 +25,7 @@ def preprocess(img):
     file_path = os.path.join(basedir, 'haarcascade_frontalface_alt2.xml')
     cap = cv2.CascadeClassifier(file_path)
     faceRects = cap.detectMultiScale(
-        gray, scaleFactor=1.2, minNeighbors=3, minSize=(50, 50))
+        gray, scaleFactor=1.2, minNeighbors=3, minSize=(48, 48))
     return gray, faceRects
 
 
@@ -45,6 +51,8 @@ def classify(img):
         global emo
         # 统一初始化的版本
         custom = emo.emotion_classifier.predict(gray_face)
+        print(custom[0])
+        #keras.backend.clear_session()
         emotion_analysis(custom[0])
         keras.backend.clear_session()
 

@@ -5,7 +5,11 @@ from flask import render_template, Response
 from app import app
 from app.backend import cv_capture
 from app.models import VideoCamera
+
+
+#用keras自带的后端来清理缓存，不能用tensorflow的！！！
 import keras
+
 
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -80,6 +84,7 @@ def analysis():
 def gen_bar():
     keras.backend.clear_session()
     cv_capture.classify(image)
+    #keras.backend.clear_session()
     bar_addr = 'static/barchart.jpg'
     address = 'static/cached_images.jpg'
     global is_uploaded
