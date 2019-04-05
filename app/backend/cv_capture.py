@@ -16,7 +16,15 @@ emo = EmotionClassifier()
 hot = np.zeros((1, 48, 48, 1))
 print(emo.emotion_classifier.predict(hot))
 
-
+emotion_labels = {
+    0: 'angry',
+    1: 'disgust',
+    2: 'fear',
+    3: 'happy',
+    4: 'sad',
+    5: 'surprise',
+    6: 'neutral'
+}
 
 
 def preprocess(img):
@@ -38,6 +46,33 @@ def discern(img):
             cv2.rectangle(img, (x, y), (x + h, y + w), (0, 255, 0), 2)  # 框出人脸
     return img
 
+
+# 对视频帧进行处理
+def get_processed_frame(camera):
+    #利用camera读取一帧
+    success, image = camera.read()
+    #获取灰度图以及识别出的人脸
+    gray, faceRects = preprocess(image)
+    color = (0, 255, 0)  # 框色
+    font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
+    for i in range(len(faceRects)):
+        x, y, w, h = faceRects[i]
+        gray_face = gray[(y):(y + h), (x):(x + w)]
+        gray_face = cv2.resize(gray_face, (48, 48))
+        gray_face = gray_face / 255.0
+        gray_face = np.expand_dims(gray_face, 0)
+        gray_face = np.expand_dims(gray_face, -1)
+        #框出人脸
+        cv2.rectangle(image, (x - 10, y - 10), (x + w + 10, y + h + 10), color, 2)
+        global emotion_labels, emo
+        #对表情进行分类并给出评分
+        custom = emo.emotion_classifier.predict(gray_face)
+        emotion_label_arg = np.argmax(custom)
+        emotion = emotion_labels[emotion_label_arg]
+        score = round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 10
+        cv2.putText(image, '%s: %f' % (emotion, score), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
+        ret, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()
 
 def classify(img):
     gray, faceRects = preprocess(img)

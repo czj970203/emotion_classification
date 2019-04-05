@@ -1,10 +1,8 @@
 import cv2
 import os
 
-
 #用tf的keras来加载模型是关键！！！
 import tensorflow as tf
-
 
 
 class VideoCamera(object):
@@ -20,6 +18,7 @@ class VideoCamera(object):
         # 因为opencv读取的图片并非jpeg格式，因此要用motion JPEG模式需要先将图片转码成jpg格式图片
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
+
 
     def read(self):
         ret, image = self.video.read()
