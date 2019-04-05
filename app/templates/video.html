@@ -1,12 +1,15 @@
+
 <html>
-<head>
-    <title>视频识别</title>
-</head>
 <body>
-    <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请开启摄像头"/>
-    <form action="/play_video" method="get">
-        <input name="video_address" type="file" accept="video/mp4"/>
-        <input type="submit" value="提交"/>
-    </form>
+<input type="file" id="file" onchange="onInputFileChange()">
+<img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请开启摄像头">
+<script>
+function onInputFileChange() {
+   var file = document.getElementById('file').files[0];
+   var url = URL.createObjectURL(file);
+   console.log(url);
+   document.getElementById("audio_id").src = url;
+}
+</script>
 </body>
 </html>
