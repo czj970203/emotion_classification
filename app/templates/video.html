@@ -1,0 +1,18 @@
+
+<html>
+<body>
+    <input name="video_address" type="file" id="file" onchange="onInputFileChange()">
+    <button><a id="open" href="#">开启摄像头</a></button>
+    <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请开启摄像头">
+</body>
+<script>
+function onInputFileChange() {
+   var file = document.getElementById('file').files[0];
+   console.log(file)
+   /*var url = URL.createObjectURL(file);
+   var gamePath = "game.html?" + url;
+   console.log(url)*/
+   document.getElementById("open").setAttribute("href", file);
+}
+</script>
+</html>
