@@ -23,6 +23,7 @@ def gen():
     while True:
         ret,frame = cap.read()
         ret, jpeg = cv2.imencode('.jpg', frame)
+        jpeg = cv_capture.classify(jpeg)
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
@@ -32,7 +33,7 @@ def gen():
 def video_play():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/play_video/<video_address>',methods=['GET'])
+@app.route('/play_video/<video_address>',methods=['POST','GET'])
 def play_video(video_address):
     global cap
     cap = cv2.VideoCapture(video_address)
