@@ -90,12 +90,14 @@ def analysis():
 @app.route('/gen_bar')
 def gen_bar():
     keras.backend.clear_session()
-    cv_capture.classify(image)
-    #keras.backend.clear_session()
-    bar_addr = 'static/barchart.jpg'
+    length = cv_capture.classify(image)
+    bar_addrs = []
+    for i in range(length):
+        temp = 'static/barchart' + str(i) + '.jpg'
+        bar_addrs.append(temp)
     address = 'static/cached_images.jpg'
     global is_uploaded
     is_uploaded=False
-    return render_template('index.html', address=address, bar_addr=bar_addr, is_uploaded=is_uploaded)
+    return render_template('index.html', address=address, bar_addrs=bar_addrs, length=length, is_uploaded=is_uploaded)
 
 
