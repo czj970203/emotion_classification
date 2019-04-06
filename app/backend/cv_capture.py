@@ -31,7 +31,7 @@ def preprocess(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     basedir = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(basedir, 'haarcascade_frontalface_alt2.xml')
-    cap = cv2.CascadeClassifier( r"C:\Program Files\Python37\Lib\site-packages\cv2\data\haarcascade_frontalface_alt2.xml")
+    cap = cv2.CascadeClassifier(file_path)
     faceRects = cap.detectMultiScale(
         gray, scaleFactor=1.2, minNeighbors=3, minSize=(48, 48))
     return gray, faceRects
@@ -69,10 +69,10 @@ def get_processed_frame(camera):
         custom = emo.emotion_classifier.predict(gray_face)
         emotion_label_arg = np.argmax(custom)
         emotion = emotion_labels[emotion_label_arg]
-        score = round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 10
+        score = round(round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 100, 1)
         cv2.putText(image, '%s: %f' % (emotion, score), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
+    ret, jpeg = cv2.imencode('.jpg', image)
+    return jpeg.tobytes()
 
 def classify(img):
     gray, faceRects = preprocess(img)
