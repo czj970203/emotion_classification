@@ -12,7 +12,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 cap=cv2.VideoCapture('E:\\1.mp4')
 #原始图片
-
+num = 0;
 @app.route('/video')
 def video():
     # jinja2模板，具体格式保存在index.html文件中
@@ -21,9 +21,13 @@ def video():
 
 def gen():
     while True:
-        ret,frame = cap.read()
-        ret, jpeg = cv2.imencode('.jpg', frame)
-        jpeg = cv_capture.classify(jpeg)
+        global num
+        num = num + 1
+        success,frame = cap.read()
+        jpeg = frame
+        if(num % 20 == 0 ):
+            jpeg = cv_capture.discern(frame)
+        ret, jpeg = cv2.imencode('.jpg', jpeg)
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')

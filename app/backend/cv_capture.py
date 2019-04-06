@@ -31,7 +31,7 @@ def preprocess(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     basedir = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(basedir, 'haarcascade_frontalface_alt2.xml')
-    cap = cv2.CascadeClassifier(file_path)
+    cap = cv2.CascadeClassifier( r"C:\Program Files\Python37\Lib\site-packages\cv2\data\haarcascade_frontalface_alt2.xml")
     faceRects = cap.detectMultiScale(
         gray, scaleFactor=1.2, minNeighbors=3, minSize=(48, 48))
     return gray, faceRects
