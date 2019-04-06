@@ -1,5 +1,4 @@
 import os
-import time
 import cv2
 from flask import render_template, Response
 from app import app
@@ -22,6 +21,7 @@ image = ''
 is_stopped = False
 is_closed = False
 is_uploaded = False
+frame_num = 0
 
 
 @app.route('/')
@@ -32,8 +32,15 @@ def index():
 
 
 def gen(camera):
+    global frame_num
     while True:
-        frame = camera.get_frame()
+        frame_num = (frame_num + 1) % 20
+        if frame_num < 10:
+            frame = camera.get_frame()
+        else:
+            ret, image = camera.read()
+            frame = cv_capture.get_processed_frame(image)
+
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
