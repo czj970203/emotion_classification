@@ -25,7 +25,7 @@ def gen():
         num = num + 1
         success,frame = cap.read()
         jpeg = frame
-        if(num % 20 == 0 ):
+        if(num % 20 <= 5 ):
             jpeg = cv_capture.discern(frame)
         ret, jpeg = cv2.imencode('.jpg', jpeg)
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
