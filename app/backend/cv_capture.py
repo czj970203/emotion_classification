@@ -48,9 +48,7 @@ def discern(img):
 
 
 # 对视频帧进行处理
-def get_processed_frame(camera):
-    #利用camera读取一帧
-    success, image = camera.read()
+def get_processed_frame(image):
     #获取灰度图以及识别出的人脸
     gray, faceRects = preprocess(image)
     color = (0, 255, 0)  # 框色

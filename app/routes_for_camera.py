@@ -38,7 +38,8 @@ def gen(camera):
         if frame_num < 10:
             frame = camera.get_frame()
         else:
-            frame = cv_capture.get_processed_frame(camera)
+            ret, image = camera.read()
+            frame = cv_capture.get_processed_frame(image)
 
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
