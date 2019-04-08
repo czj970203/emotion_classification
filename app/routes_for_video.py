@@ -32,7 +32,7 @@ def gen():
         num = num + 1
         success,frame = cap.read()
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
-        if(num % 20 == 5 ):
+        if(num % 20 <= 10 ):
             frame=cv_capture.discern(frame)
             jpeg = cv_capture.get_processed_frame(frame)
             yield (b'--frame\r\n'
