@@ -9,20 +9,21 @@ import keras
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
+cap = ''
 
 #原始图片
 num = 0
 @app.route('/video')
 def video():
+    global cap
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    video_path = os.path.join(basedir, 'static/test1.mp4')
+    cap = cv2.VideoCapture(video_path)
     # jinja2模板，具体格式保存在index.html文件中
     return render_template('video.html', title="trial")
 
 
 def gen():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    video_path = os.path.join(basedir, 'static/test1.mp4')
-    cap = cv2.VideoCapture(video_path)
     while True:
         global num
         num = num + 1
