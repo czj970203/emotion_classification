@@ -4,15 +4,21 @@
     <title>视频</title>
 </head>
 <body>
+
     <div>
         <h1>表情识别工具</h1>
         <a href="{{ url_for('video') }}">视频</a>
         <a href="{{ url_for('index') }}">摄像头</a>
     </div>
     <hr />
-    <input name="video_address" type="file" id="file" onchange="onInputFileChange()">
-    <button><a id="open" href="#">开启摄像头</a></button>
-    <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请开启摄像头">
+    <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请选择视频">
+    <button><a href="{{ url_for('catch') }}">截取屏幕</a></button>
+    {% if is_uploaded %}
+    <button><a href="{{ url_for('video_analysis') }}">分析表达力</a></button>
+    {% endif %}
+    <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
+    <img src="{{ bar_addr }}" width="50%" height="40%" alt="无识别目标">
+
 </body>
 <script>
 function onInputFileChange() {
