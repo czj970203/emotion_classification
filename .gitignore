@@ -12,3 +12,5 @@ app/backend/__pycache__/cv_capture.cpython-37.pyc
 app/backend/__pycache__/__init__.cpython-37.pyc
 app/__pycache__/routes_for_video.cpython-37.pyc
 app/backend/cv_capture.py
+.idea/emotion_classification.iml
+.idea/misc.xml
