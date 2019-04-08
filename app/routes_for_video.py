@@ -10,9 +10,11 @@ app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-cap=cv2.VideoCapture('E:\\1.mp4')
+basedir = os.path.abspath(__file__)
+video_path = os.path.join(basedir, 'static/HCI最终版.mp4')
+cap=cv2.VideoCapture(video_path)
 #原始图片
-num = 0;
+num = 0
 @app.route('/video')
 def video():
     # jinja2模板，具体格式保存在index.html文件中
