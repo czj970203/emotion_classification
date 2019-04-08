@@ -1,9 +1,13 @@
 <html>
     <head>
-        <title>摄像头调试</title>
+        <title>摄像头</title>
     </head>
     <body>
-        <h1>表情识别工具</h1>
+        <div>
+            <h1>表情识别工具</h1>
+            <a href="{{ url_for('video') }}">视频</a>
+            <a href="{{ url_for('index') }}">摄像头</a>
+        </div>
         <img src="{{ url_for('video_feed') }}" width="60%" height="40%" alt="请开启摄像头">
         {% if is_closed %}
         <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>
@@ -14,7 +18,11 @@
         <button><a href="{{ url_for('gen_bar') }}">分析表达力</a></button>
         {% endif %}
         <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
+        {% if bar_addrs %}
+        {% for bar_addr in bar_addrs %}
         <img src="{{ bar_addr }}" width="50%" height="40%" alt="无识别目标">
+        {% endfor %}
+        {% endif %}
         {% endif %}
     </body>
 </html>

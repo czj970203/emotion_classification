@@ -12,9 +12,8 @@ import keras
 
 emo = EmotionClassifier()
 # 最大的玄学：热启动
-
 hot = np.zeros((1, 48, 48, 1))
-print(emo.emotion_classifier.predict(hot))
+emo.emotion_classifier.predict(hot)
 
 emotion_labels = {
     0: 'angry',
@@ -40,10 +39,14 @@ def preprocess(img):
 # 图片识别方法封装
 def discern(img):
     gray, faceRects = preprocess(img)
-    if len(faceRects):
-        for faceRect in faceRects:
-            x, y, w, h = faceRect
-            cv2.rectangle(img, (x, y), (x + h, y + w), (0, 255, 0), 2)  # 框出人脸
+    font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
+    length = len(faceRects)
+    if(length > 4):
+        length = 4
+    for i in range(length):
+        x, y, w, h = faceRects[i]
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
+        cv2.putText(img, str(i), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
     return img
 
 
@@ -53,7 +56,10 @@ def get_processed_frame(image):
     gray, faceRects = preprocess(image)
     color = (0, 255, 0)  # 框色
     font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
-    for i in range(len(faceRects)):
+    length = len(faceRects)
+    if length > 4:
+        length = 4
+    for i in range(length):
         x, y, w, h = faceRects[i]
         gray_face = gray[(y):(y + h), (x):(x + w)]
         gray_face = cv2.resize(gray_face, (48, 48))
@@ -74,8 +80,11 @@ def get_processed_frame(image):
 
 def classify(img):
     gray, faceRects = preprocess(img)
-    color = (255, 0, 0)
-    for(x, y, w, h) in faceRects:
+    length = len(faceRects)
+    if length > 4:
+        length = 4
+    for i in range(length):
+        (x, y, w, h) = faceRects[i]
         gray_face = gray[(y):(y + h), (x):(x + w)]
         gray_face = cv2.resize(gray_face, (48, 48))
         gray_face = gray_face / 255.0
@@ -84,13 +93,12 @@ def classify(img):
         global emo
         # 统一初始化的版本
         custom = emo.emotion_classifier.predict(gray_face)
-        print(custom[0])
-        #keras.backend.clear_session()
-        emotion_analysis(custom[0])
+        emotion_analysis(custom[0], i)
         keras.backend.clear_session()
+    return length
 
 
-def emotion_analysis(emotions):
+def emotion_analysis(emotions, i):
     objects = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
     y_pos = np.arange(len(objects))
     plt.bar(y_pos, emotions, align='center', alpha=0.5)
@@ -98,6 +106,6 @@ def emotion_analysis(emotions):
     plt.ylabel('percentage')
     plt.title('emotions')
     root = os.getcwd()
-    save_path = os.path.join(root, 'app/static/barchart.jpg')
+    save_path = str(root) + '/app/static/barchart' + str(i) + '.jpg'
     plt.savefig(save_path)
     plt.close()
