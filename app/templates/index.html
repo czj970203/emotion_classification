@@ -8,6 +8,7 @@
             <a href="{{ url_for('video') }}">视频</a>
             <a href="{{ url_for('index') }}">摄像头</a>
         </div>
+        <hr />
         <img src="{{ url_for('video_feed') }}" width="60%" height="40%" alt="请开启摄像头">
         {% if is_closed %}
         <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>

@@ -1,12 +1,15 @@
 
 <html>
-
+<head>
+    <title>视频</title>
+</head>
 <body>
     <div>
         <h1>表情识别工具</h1>
         <a href="{{ url_for('video') }}">视频</a>
         <a href="{{ url_for('index') }}">摄像头</a>
     </div>
+    <hr />
     <input name="video_address" type="file" id="file" onchange="onInputFileChange()">
     <button><a id="open" href="#">开启摄像头</a></button>
     <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请开启摄像头">
