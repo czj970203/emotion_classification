@@ -20,7 +20,7 @@ is_uploaded = False
 def video():
     global cap
     basedir = os.path.abspath(os.path.dirname(__file__))
-    video_path = os.path.join(basedir, 'static/test1.mp4')
+    video_path = os.path.join(basedir, 'static/HCI最终版.mp4')
     cap = cv2.VideoCapture(video_path)
     # jinja2模板，具体格式保存在index.html文件中
     return render_template('video.html', title="trial")
@@ -32,8 +32,7 @@ def gen():
         num = num + 1
         success,frame = cap.read()
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
-        if(num % 20 <= 10 ):
-            frame=cv_capture.discern(frame)
+        if(num % 20 <= 2):
             jpeg = cv_capture.get_processed_frame(frame)
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg + b'\r\n\r\n')
@@ -71,7 +70,7 @@ def catch():
 @app.route('/video_analysis')
 def video_analysis():
     keras.backend.clear_session()
-    cv_capture.classify(image)
+    cv_capture.classify(image, '/app/static/video_barchart')
     #keras.backend.clear_session()
     bar_addr = 'static/video_barchart.jpg'
     address = 'static/cached_video_images.jpg'

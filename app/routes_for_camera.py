@@ -90,7 +90,7 @@ def analysis():
 @app.route('/gen_bar')
 def gen_bar():
     keras.backend.clear_session()
-    length = cv_capture.classify(image)
+    length = cv_capture.classify(image, '/app/static/barchart')
     bar_addrs = []
     for i in range(length):
         temp = 'static/barchart' + str(i) + '.jpg'

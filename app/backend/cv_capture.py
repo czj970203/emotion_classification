@@ -78,7 +78,7 @@ def get_processed_frame(image):
     ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
 
-def classify(img):
+def classify(img, file_path):
     gray, faceRects = preprocess(img)
     length = len(faceRects)
     if length > 4:
@@ -93,12 +93,12 @@ def classify(img):
         global emo
         # 统一初始化的版本
         custom = emo.emotion_classifier.predict(gray_face)
-        emotion_analysis(custom[0], i)
+        emotion_analysis(custom[0], i, file_path)
         keras.backend.clear_session()
     return length
 
 
-def emotion_analysis(emotions, i):
+def emotion_analysis(emotions, i, file_path):
     objects = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
     y_pos = np.arange(len(objects))
     plt.bar(y_pos, emotions, align='center', alpha=0.5)
@@ -106,6 +106,7 @@ def emotion_analysis(emotions, i):
     plt.ylabel('percentage')
     plt.title('emotions')
     root = os.getcwd()
-    save_path = str(root) + '/app/static/barchart' + str(i) + '.jpg'
+    save_path = str(root) + file_path + str(i) + '.jpg'
+    print(save_path)
     plt.savefig(save_path)
     plt.close()
