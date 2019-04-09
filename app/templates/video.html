@@ -17,7 +17,11 @@
     <button><a href="{{ url_for('video_analysis') }}">分析表达力</a></button>
     {% endif %}
     <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
+    {% if bar_addrs %}
+    {% for bar_addr in bar_addrs %}
     <img src="{{ bar_addr }}" width="50%" height="40%" alt="无识别目标">
+    {% endfor %}
+    {% endif %}
 
 </body>
 <script>

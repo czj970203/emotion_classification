@@ -28,6 +28,6 @@ class VideoCamera(object):
 class EmotionClassifier(object):
     def __init__(self):
         basedir = os.path.abspath(os.path.dirname(__file__))
-        model_path = os.path.join(basedir, 'backend/simple_CNN.530-0.65.hdf5')
+        model_path = os.path.join(basedir, 'backend/63%model.hdf5')
         self.emotion_classifier = tf.keras.models.load_model(model_path)
 
