@@ -70,10 +70,13 @@ def catch():
 @app.route('/video_analysis')
 def video_analysis():
     keras.backend.clear_session()
-    cv_capture.classify(image, '/app/static/video_barchart')
+    length = cv_capture.classify(image, '/app/static/video_barchart')
     #keras.backend.clear_session()
-    bar_addr = 'static/video_barchart.jpg'
+    bar_addrs = []
+    for i in range(length):
+        temp = 'static/video_barchart' + str(i) + '.jpg'
+        bar_addrs.append(temp)
     address = 'static/cached_video_images.jpg'
     global is_uploaded
     is_uploaded=False
-    return render_template('video.html', address=address, bar_addr=bar_addr, is_uploaded=is_uploaded)
+    return render_template('video.html', address=address, bar_addr=bar_addrs, is_uploaded=is_uploaded)
