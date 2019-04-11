@@ -1,4 +1,5 @@
 import os
+import time
 import cv2
 from flask import render_template, Response
 from app import app
@@ -16,7 +17,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 
-
+#初始化摄像头
 cap = VideoCamera()
 #原始图片
 image = ''
@@ -30,6 +31,7 @@ is_uploaded = False
 start_collect = False
 #是否结束截取视频
 finish_collect = False
+#统计已传帧的数量
 frame_num = 0
 #收集帧
 collected_images = []
@@ -67,16 +69,21 @@ def gen(camera):
 
 def gen_clips():
     global collected_images
-    for image in collected_images:
-        ret, jpeg = cv2.imencode('.jpg', image)
-        frame = jpeg.tobytes()
-        yield (b'--frame\r\n'
-            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+    while True:
+        temp = collected_images
+        for image in temp:
+            ret, jpeg = cv2.imencode('.jpg', image)
+            frame = jpeg.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+            time.sleep(0.025)
+
 
 
 @app.route('/video_feed')  # 这个地址返回视频流响应
 def video_feed():
     return Response(gen(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route('/close_video')
 def close_video():
@@ -86,6 +93,7 @@ def close_video():
         pass
     cap.__del__()
     return render_template('index.html', is_closed=is_closed)
+
 
 @app.route('/open_video')
 def open_video():

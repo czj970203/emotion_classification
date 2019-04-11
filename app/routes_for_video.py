@@ -1,5 +1,5 @@
 import os
-
+import time
 import cv2
 from flask import render_template, Response
 from app import app
@@ -40,6 +40,7 @@ def gen():
             ret, jpeg = cv2.imencode('.jpg', frame)
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
+        time.sleep(0.025)
 
 
 @app.route('/video_play')  # 这个地址返回视频流响应
@@ -71,7 +72,6 @@ def catch():
 def video_analysis():
     keras.backend.clear_session()
     length = cv_capture.classify(image, '/app/static/video_barchart')
-    #keras.backend.clear_session()
     bar_addrs = []
     for i in range(length):
         temp = 'static/video_barchart' + str(i) + '.jpg'

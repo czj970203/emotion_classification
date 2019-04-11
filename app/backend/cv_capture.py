@@ -78,6 +78,7 @@ def get_processed_frame(image):
     ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
 
+
 def classify(img, file_path):
     gray, faceRects = preprocess(img)
     length = len(faceRects)
