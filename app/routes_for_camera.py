@@ -1,7 +1,7 @@
 import os
 import time
 import cv2
-from flask import render_template, Response
+from flask import render_template, Response, jsonify
 from app import app
 from app.backend import cv_capture
 from app.models import VideoCamera
@@ -45,18 +45,16 @@ def index():
 
 
 def gen(camera):
-    global frame_num
+    global frame_num, collected_images
     while True:
         frame_num = (frame_num + 1) % 20
         ret, image = camera.read()
+        if start_collect:
+            collected_images.append(image)
         if frame_num < 10:
             frame = camera.get_frame()
         else:
             frame = cv_capture.get_processed_frame(image)
-
-        global start_collect
-        if start_collect:
-            collected_images.append(image)
 
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
@@ -76,7 +74,7 @@ def gen_clips():
             frame = jpeg.tobytes()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-            time.sleep(0.025)
+            time.sleep(0.075)
 
 
 
@@ -131,7 +129,7 @@ def gen_bar():
     address = 'static/cached_images.jpg'
     global is_uploaded
     is_uploaded=False
-    return render_template('index.html', address=address, bar_addrs=bar_addrs, length=length, is_uploaded=is_uploaded)
+    return render_template('index.html', address=address, bar_addrs=bar_addrs, is_uploaded=is_uploaded)
 
 
 @app.route('/collect_frames')
@@ -148,7 +146,9 @@ def stop_collect():
     global start_collect, finish_collect, collected_images
     start_collect = False
     finish_collect = True
-    return render_template('index.html', start_collect=start_collect, finish_collect=finish_collect)
+    line_data = cv_capture.process_line_chart(collected_images)
+    line_result = jsonify({'data': line_data})
+    return render_template('index.html', start_collect=start_collect, finish_collect=finish_collect, line_result=line_result)
 
 
 @app.route('/feed_video_clips')
@@ -158,6 +158,18 @@ def feed_video_clips():
         return Response(gen_clips(), mimetype='multipart/x-mixed-replace; boundary=frame')
     else:
         return 'No frames are collected!'
+
+
+@app.route('/return_bar', methods=['POST', 'GET'])
+def return_bar():
+    ret, img = cap.read()
+    bar_data = cv_capture.process_bar_chart(img)
+    bar_result = jsonify({'data': bar_data.tolist()})
+    return bar_result
+
+
+
+
 
 
 

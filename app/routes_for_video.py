@@ -47,11 +47,13 @@ def gen():
 def video_play():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
 @app.route('/play_video/<video_address>',methods=['POST','GET'])
 def play_video(video_address):
     global cap
     cap = cv2.VideoCapture(video_address)
     return render_template('video.html')
+
 
 @app.route('/catch', methods=['GET', 'POST'])
 def catch():
@@ -67,6 +69,7 @@ def catch():
     global is_uploaded
     is_uploaded = True
     return render_template('video.html', address=address, is_uploaded=is_uploaded)
+
 
 @app.route('/video_analysis')
 def video_analysis():

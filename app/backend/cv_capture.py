@@ -15,6 +15,7 @@ emo = EmotionClassifier()
 hot = np.zeros((1, 48, 48, 1))
 emo.emotion_classifier.predict(hot)
 
+
 emotion_labels = {
     0: 'angry',
     1: 'disgust',
@@ -25,6 +26,9 @@ emotion_labels = {
     6: 'neutral'
 }
 
+#暂存柱状图数据，以免未识别出人脸时报错
+cached_bar_data = []
+
 
 def preprocess(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -33,14 +37,14 @@ def preprocess(img):
     cap = cv2.CascadeClassifier(file_path)
     faceRects = cap.detectMultiScale(
         gray, scaleFactor=1.2, minNeighbors=3, minSize=(48, 48))
-    return gray, faceRects
+    length = len(faceRects)
+    return gray, faceRects, length
 
 
 # 图片识别方法封装
 def discern(img):
-    gray, faceRects = preprocess(img)
+    gray, faceRects, length = preprocess(img)
     font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
-    length = len(faceRects)
     if(length > 4):
         length = 4
     for i in range(length):
@@ -53,10 +57,9 @@ def discern(img):
 # 对视频帧进行处理
 def get_processed_frame(image):
     #获取灰度图以及识别出的人脸
-    gray, faceRects = preprocess(image)
+    gray, faceRects, length = preprocess(image)
     color = (0, 255, 0)  # 框色
     font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
-    length = len(faceRects)
     if length > 4:
         length = 4
     for i in range(length):
@@ -80,8 +83,7 @@ def get_processed_frame(image):
 
 
 def classify(img, file_path):
-    gray, faceRects = preprocess(img)
-    length = len(faceRects)
+    gray, faceRects, length = preprocess(img)
     if length > 4:
         length = 4
     for i in range(length):
@@ -108,6 +110,46 @@ def emotion_analysis(emotions, i, file_path):
     plt.title('emotions')
     root = os.getcwd()
     save_path = str(root) + file_path + str(i) + '.jpg'
-    print(save_path)
     plt.savefig(save_path)
     plt.close()
+
+
+#返回折线图数据
+def process_line_chart(images):
+    line_results = []
+    for image in images:
+        gray, faceRects, length = preprocess(image)
+        if length != 0:
+            (x, y, w, h) = faceRects[0]
+            gray_face = gray[(y):(y + h), (x):(x + w)]
+            gray_face = cv2.resize(gray_face, (48, 48))
+            gray_face = gray_face / 255.0
+            gray_face = np.expand_dims(gray_face, 0)
+            gray_face = np.expand_dims(gray_face, -1)
+            global emo
+            custom = emo.emotion_classifier.predict(gray_face)
+            line_results.append(custom[0].tolist())
+    return line_results
+
+
+#返回柱状图数据
+def process_bar_chart(image):
+    global cached_bar_data
+    gray, faceRects, length = preprocess(image)
+    if length != 0:
+        (x, y, w, h) = faceRects[0]
+        gray_face = gray[(y):(y + h), (x):(x + w)]
+        gray_face = cv2.resize(gray_face, (48, 48))
+        gray_face = gray_face / 255.0
+        gray_face = np.expand_dims(gray_face, 0)
+        gray_face = np.expand_dims(gray_face, -1)
+        global emo
+        custom = emo.emotion_classifier.predict(gray_face)
+        cached_bar_data = custom[0]
+    return cached_bar_data
+
+
+
+
+
+
