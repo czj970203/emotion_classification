@@ -143,12 +143,10 @@ def collect_frames():
 
 @app.route('/stop_collect')
 def stop_collect():
-    global start_collect, finish_collect, collected_images
+    global start_collect, finish_collect
     start_collect = False
     finish_collect = True
-    line_data = cv_capture.process_line_chart(collected_images)
-    line_result = jsonify({'data': line_data})
-    return render_template('index.html', start_collect=start_collect, finish_collect=finish_collect, line_result=line_result)
+    return render_template('index.html', start_collect=start_collect, finish_collect=finish_collect)
 
 
 @app.route('/feed_video_clips')
@@ -164,8 +162,16 @@ def feed_video_clips():
 def return_bar():
     ret, img = cap.read()
     bar_data = cv_capture.process_bar_chart(img)
-    bar_result = jsonify({'data': bar_data.tolist()})
+    bar_result = jsonify({'data': bar_data})
     return bar_result
+
+
+@app.route('/return_line', methods=['POST', 'GET'])
+def return_line():
+    global collected_images
+    line_data = cv_capture.process_line_chart(collected_images)
+    line_result = jsonify({'data': line_data})
+    return line_result
 
 
 

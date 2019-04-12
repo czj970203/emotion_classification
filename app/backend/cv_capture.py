@@ -145,7 +145,7 @@ def process_bar_chart(image):
         gray_face = np.expand_dims(gray_face, -1)
         global emo
         custom = emo.emotion_classifier.predict(gray_face)
-        cached_bar_data = custom[0]
+        cached_bar_data = custom[0].tolist()
     return cached_bar_data
 
 

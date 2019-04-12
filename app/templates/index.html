@@ -15,15 +15,18 @@
         {% else %}
         <button><a href="{{ url_for('close_video') }}">关闭摄像头</a></button>
         <button><a href="{{ url_for('analysis') }}">截取屏幕</a></button>
-        <button><a href="{{ url_for('collect_frames') }}">开始截屏</a></button>
+        <button><a href="{{ url_for('collect_frames') }}">开始录制</a></button>
         {% if start_collect %}
-        <button><a href="{{ url_for('stop_collect') }}">结束截屏</a></button>
+        <button><a href="{{ url_for('stop_collect') }}">结束录制</a></button>
         {% endif %}
         {% if is_uploaded %}
         <button><a href="{{ url_for('gen_bar') }}">分析表达力</a></button>
         {% endif %}
+        {% if not start_collect and not finish_collect %}
         <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
+        {% endif %}
         {% if finish_collect %}
+        <button onclick="getLineData()">绘制折线图</button>
         <img src="{{ url_for('feed_video_clips') }}" width="50%" height="40%" alt="请截取视频片段">
         {% endif %}
         {% if bar_addrs %}
@@ -32,8 +35,8 @@
         {% endfor %}
         {% endif %}
         {% endif %}
-    <script src="../static/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="../static/scripts/js/index.js" type="text/javascript"></script>
+        <script src="../static/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="../static/scripts/js/index.js" type="text/javascript"></script>
     </body>
 
 </html>
