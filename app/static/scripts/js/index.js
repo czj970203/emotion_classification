@@ -1,6 +1,7 @@
 /**
  * Created by chenzejun on 2019/4/11.
  */
+
 var chart1 = echarts.init(document.getElementById('bar'));
 var option1 = {
     title : {
@@ -50,6 +51,12 @@ var option2 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
+    grid : {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
     xAxis : {
         type : 'category',
         boundaryGap : 'false',
@@ -96,6 +103,8 @@ var option2 = {
         }
     ]
 };
+chart1.setOption(option1);
+chart2.setOption(option2);
 
 
 function getBarData() {
@@ -105,9 +114,10 @@ function getBarData() {
         dataType: 'json',
         success: function (data) {
             if (data != null) {
-                option1.series[0].data = data;
-                chart1.setOption(option1);
-                alert('柱状图获取成功');
+
+                option1.series[0].data = data['data'];
+                window.setTimeout(chart1.setOption(option1), 500);
+
             } else {
                 alert('信息获取失败');
             }
@@ -129,9 +139,9 @@ function getLineData(){
             if(data != null){
                 alert(data['data'][0]);
                 for(var i=0;i<7;i++){
-                    option2.series[i].data = data[i];
+                    option2.series[i].data = data['data'][i];
                 }
-                chart2.setOption(option2);
+                window.setTimeout(chart2.setOption(option2), 500);
             }else{
                 alert('信息获取失败')
             }
