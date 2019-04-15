@@ -20,7 +20,7 @@ is_uploaded = False
 def video():
     global cap
     basedir = os.path.abspath(os.path.dirname(__file__))
-    video_path = os.path.join(basedir, 'static/test1.flv')
+    video_path = os.path.join(basedir, 'static/videos/test1.flv')
     cap = cv2.VideoCapture(video_path)
     # jinja2模板，具体格式保存在index.html文件中
     return render_template('video.html', title="trial")
@@ -63,8 +63,8 @@ def catch():
     image = img
     img = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
-    write_path = os.path.join(basedir, 'static/cached_video_images.jpg')
-    address = 'static/cached_video_images.jpg'
+    write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
+    address = 'static/images/cached_video_images.jpg'
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
@@ -74,12 +74,12 @@ def catch():
 @app.route('/video_analysis')
 def video_analysis():
     keras.backend.clear_session()
-    length = cv_capture.classify(image, '/app/static/video_barchart')
+    length = cv_capture.classify(image, '/app/static/images/video_barchart')
     bar_addrs = []
     for i in range(length):
-        temp = 'static/video_barchart' + str(i) + '.jpg'
+        temp = 'static/images/video_barchart' + str(i) + '.jpg'
         bar_addrs.append(temp)
-    address = 'static/cached_video_images.jpg'
+    address = 'static/images/cached_video_images.jpg'
     global is_uploaded
     is_uploaded=False
     return render_template('video.html', address=address, bar_addrs=bar_addrs, is_uploaded=is_uploaded)

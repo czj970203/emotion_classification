@@ -28,7 +28,7 @@ function getLineData(){
         dataType: 'json',
         success: function(data){
             if(data != null){
-                alert(data['data'][0])
+                alert('折线图获取成功')
             }else{
                 alert('信息获取失败')
             }

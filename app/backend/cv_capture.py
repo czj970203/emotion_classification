@@ -77,7 +77,7 @@ def get_processed_frame(image):
         emotion_label_arg = np.argmax(custom)
         emotion = emotion_labels[emotion_label_arg]
         score = round(round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 100, 1)
-        cv2.putText(image, '%s: %f' % (emotion, score), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
+        cv2.putText(image, '%s' % (emotion), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
     ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
 

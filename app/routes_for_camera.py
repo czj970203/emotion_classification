@@ -18,13 +18,13 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 #初始化摄像头
-cap = VideoCamera()
+cap = ''
 #原始图片
 image = ''
 #是否停止传帧
-is_stopped = False
+is_stopped = True
 #是否关闭摄像头
-is_closed = False
+is_closed = True
 #是否上传图片至网页
 is_uploaded = False
 #是否开始截取视频
@@ -41,7 +41,7 @@ collected_images = []
 @app.route('/index')
 def index():
     # jinja2模板，具体格式保存在index.html文件中
-    return render_template('index.html', title="trial")
+    return render_template('index.html', title="trial", is_closed=is_closed)
 
 
 def gen(camera):
@@ -85,7 +85,7 @@ def video_feed():
 
 @app.route('/close_video')
 def close_video():
-    global is_stopped, is_closed
+    global is_stopped, is_closed, cap
     is_closed = True
     while not is_stopped:
         pass
@@ -95,7 +95,8 @@ def close_video():
 
 @app.route('/open_video')
 def open_video():
-    cap.__init__()
+    global cap
+    cap = VideoCamera()
     global is_stopped, is_closed
     is_stopped = False
     is_closed = False
@@ -110,8 +111,8 @@ def analysis():
     image = img
     img = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
-    write_path = os.path.join(basedir, 'static/cached_images.jpg')
-    address = 'static/cached_images.jpg'
+    write_path = os.path.join(basedir, 'static/images/cached_images.jpg')
+    address = 'static/images/cached_images.jpg'
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
@@ -121,12 +122,12 @@ def analysis():
 @app.route('/gen_bar')
 def gen_bar():
     keras.backend.clear_session()
-    length = cv_capture.classify(image, '/app/static/barchart')
+    length = cv_capture.classify(image, '/app/static/images/barchart')
     bar_addrs = []
     for i in range(length):
-        temp = 'static/barchart' + str(i) + '.jpg'
+        temp = 'static/images/barchart' + str(i) + '.jpg'
         bar_addrs.append(temp)
-    address = 'static/cached_images.jpg'
+    address = 'static/images/cached_images.jpg'
     global is_uploaded
     is_uploaded=False
     return render_template('index.html', address=address, bar_addrs=bar_addrs, is_uploaded=is_uploaded)
@@ -160,6 +161,7 @@ def feed_video_clips():
 
 @app.route('/return_bar', methods=['POST', 'GET'])
 def return_bar():
+    global cap
     ret, img = cap.read()
     bar_data = cv_capture.process_bar_chart(img)
     bar_result = jsonify({'data': bar_data})
