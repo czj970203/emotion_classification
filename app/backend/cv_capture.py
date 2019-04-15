@@ -129,7 +129,12 @@ def process_line_chart(images):
             global emo
             custom = emo.emotion_classifier.predict(gray_face)
             line_results.append(custom[0].tolist())
-    return line_results
+
+    leng = len(line_results)
+    temp = np.array(line_results)
+    temp = temp.reshape(7, leng)
+    result = temp.tolist()
+    return result
 
 
 #返回柱状图数据

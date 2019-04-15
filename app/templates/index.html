@@ -1,6 +1,10 @@
 <html>
     <head>
+        <meta charset="utf-8">
         <title>摄像头</title>
+        <script src="../static/scripts/js/echarts.js"></script>
+        <script src="../static/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="../static/scripts/js/index.js" type="text/javascript"></script>
     </head>
     <body>
         <div>
@@ -10,6 +14,7 @@
         </div>
         <hr />
         <img src="{{ url_for('video_feed') }}" width="60%" height="40%" alt="请开启摄像头">
+        <div id="bar"></div>
         {% if is_closed %}
         <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>
         {% else %}
@@ -35,8 +40,10 @@
         {% endfor %}
         {% endif %}
         {% endif %}
-        <script src="../static/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-        <script src="../static/scripts/js/index.js" type="text/javascript"></script>
+        <div id="line"></div>
+
+
     </body>
+
 
 </html>

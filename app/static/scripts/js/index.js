@@ -1,6 +1,103 @@
 /**
  * Created by chenzejun on 2019/4/11.
  */
+var chart1 = echarts.init(document.getElementById('bar'));
+var option1 = {
+    title : {
+        text : ''
+    },
+    tooltip : {
+        trigger : 'axis',
+        axisPointer : {
+            type : 'cross',
+            label : {
+                backgroundColor: '#283b56'
+            }
+        }
+    },
+    legend : {
+        data : ['表情力']
+    },
+    xAxis : {
+        type : 'value',
+        boundaryGap : [0.2, 0.2],
+        max : 1,
+        min : 0
+    },
+    yAxis : {
+        type : 'category',
+        boundaryGap : 'true',
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    series : [
+        {
+            name : '表情力',
+            type : 'bar',
+            data : []
+        }
+    ]
+};
+
+
+var chart2 = echarts.init(document.getElementById('line'));
+var option2 = {
+    title : {
+        text : ''
+    },
+    tooltip : {
+        trigger : 'axis'
+    },
+    legend : {
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    xAxis : {
+        type : 'category',
+        boundaryGap : 'false',
+        data : []
+    },
+    yAxis : {
+        type : 'value'
+    },
+    series : [
+        {
+            name : 'angry',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'disgust',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'fear',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'happy',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'sad',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'surprise',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'neutral',
+            type : 'line',
+            data : []
+        }
+    ]
+};
+
+
 function getBarData() {
     $.ajax({
         url: '/return_bar',
@@ -8,6 +105,8 @@ function getBarData() {
         dataType: 'json',
         success: function (data) {
             if (data != null) {
+                option1.series[0].data = data;
+                chart1.setOption(option1);
                 alert('柱状图获取成功');
             } else {
                 alert('信息获取失败');
@@ -28,7 +127,11 @@ function getLineData(){
         dataType: 'json',
         success: function(data){
             if(data != null){
-                alert('折线图获取成功')
+                alert(data['data'][0]);
+                for(var i=0;i<7;i++){
+                    option2.series[i].data = data[i];
+                }
+                chart2.setOption(option2);
             }else{
                 alert('信息获取失败')
             }
