@@ -5,7 +5,7 @@ from flask import render_template, Response,request
 from app import app
 from app.backend import cv_capture
 import keras
-
+import base64
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
