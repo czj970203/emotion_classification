@@ -87,14 +87,16 @@ def video_analysis():
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
     imageData = request.data
+    img = base64.b64decode(imageData)
     global image
     #暂存原图
-    image = imageData
-    img = cv_capture.discern(imageData)
+    image = img
+    img = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
     address = 'static/images/cached_video_images.jpg'
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
-    return img
+    imageData = base64.b64encode(img.read())
+    return imageData
