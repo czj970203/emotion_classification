@@ -102,6 +102,6 @@ def catch_image():
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
-    return_img = cv2.imencode('.jpg', img) //转换成图片
-    imageData = base64.b64encode(return_img) //图片转换成base64
+    return_img = cv2.imencode('.jpg', img) #转换成图片
+    imageData = base64.b64encode(return_img) #图片转换成base64
     return imageData
