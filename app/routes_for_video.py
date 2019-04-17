@@ -105,5 +105,5 @@ def catch_image():
     is_uploaded = True
     ret,return_img = cv2.imencode('.jpg', img).tobytes()  //转换成图片
     imageData = base64.b64encode(return_img) //图片转换成base64
-    return url+imageData
+    return url+','+imageData
 
