@@ -3,12 +3,12 @@
  */
 function onInputFileChange() {
     var file = document.getElementById('file').files[0];
-    var url = URL.createObjectURL(file);
+    var url = window.URL.createObjectURL(file);
     console.log(url);
     document.getElementById("audio_id").src = url;
 }
 ctx = canvas.getContext("2d");
-//var int=self.setInterval("capture()",2000);
+var int=self.setInterval("capture()",2000);
 function capture(){
     ctx.drawImage(audio_id, 0, 0, 400, 300);
     var imageData = canvas.toDataURL('image',1.0);
@@ -18,7 +18,7 @@ function capture(){
         data: {'imageData':imageData},
         success: function (data) {
             if (data != null) {
-                ctx.drawImage(data, 0, 0, 400, 300);
+                document.getElementById('img').setAttribute('src',data)
             } else {
                 alert('信息获取失败');
             }

@@ -17,7 +17,8 @@
     <input type="file" id="file" onchange="onInputFileChange()">
     <video id="audio_id" controls autoplay loop width="60%" height="40%">Your browser can't support HTML5 Audio</video>
     <button onclick="capture()">抓图</button>
-    <canvas id="canvas" width="400" height="300"></canvas>
+    <canvas id="canvas" width="400" height="300" hidden></canvas>
+    <img src="" id="img" width="400" height="300">
     <button><a href="{{ url_for('catch') }}">截取屏幕</a></button>
     {% if is_uploaded %}
     <button><a href="{{ url_for('video_analysis') }}">分析表达力</a></button>
