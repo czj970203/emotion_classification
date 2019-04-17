@@ -15,7 +15,7 @@ function capture(){
         $.ajax({
         url: '/catch_image',
         type: 'post',
-        data: imageData,
+        data: {'imageData':imageData},
         success: function (data) {
             if (data != null) {
                 ctx.drawImage(data, 0, 0, 400, 300);
