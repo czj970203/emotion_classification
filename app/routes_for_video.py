@@ -84,11 +84,11 @@ def video_analysis():
     is_uploaded=False
     return render_template('video.html', address=address, bar_addrs=bar_addrs, is_uploaded=is_uploaded)
 
+
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
     imageData = request.form.get('imageData')
-    if(imageData == null ):
-        print(imageData)
+    print(imageData == None)
     img = cv_capture.discern(imageData)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
