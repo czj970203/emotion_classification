@@ -5,7 +5,7 @@ from flask import render_template, Response,request
 from app import app
 from app.backend import cv_capture
 import keras
-import base64
+import numpy as np
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -88,7 +88,7 @@ def video_analysis():
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
     imageData = request.data
-    img = base64.b64decode(imageData)
+    img = np.array(imageData).reshape(768, 1366)
     global image
     #暂存原图
     image = img
@@ -99,5 +99,5 @@ def catch_image():
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
-    imageData = base64.b64encode(img.read())
+    imageData = bytearray(img)
     return imageData
