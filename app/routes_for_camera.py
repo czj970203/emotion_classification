@@ -80,6 +80,7 @@ def gen_clips():
 
 @app.route('/video_feed')  # 这个地址返回视频流响应
 def video_feed():
+    global cap
     return Response(gen(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
@@ -105,8 +106,8 @@ def open_video():
 
 @app.route('/analysis', methods=['GET', 'POST'])
 def analysis():
+    global image, cap
     ret, img = cap.read()
-    global image
     #暂存原图
     image = img
     img = cv_capture.discern(img)

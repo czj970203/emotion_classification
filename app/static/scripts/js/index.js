@@ -128,7 +128,7 @@ function getBarData() {
     });
 }
 
-window.setInterval(getBarData, 5000)
+window.setInterval(getBarData, 500)
 
 function getLineData(){
     $.ajax({
@@ -137,7 +137,6 @@ function getLineData(){
         dataType: 'json',
         success: function(data){
             if(data != null){
-                alert(data['data'][0]);
                 for(var i=0;i<7;i++){
                     option2.series[i].data = data['data'][i];
                 }

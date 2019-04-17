@@ -117,18 +117,21 @@ def emotion_analysis(emotions, i, file_path):
 #返回折线图数据
 def process_line_chart(images):
     line_results = []
+    count = 0
     for image in images:
-        gray, faceRects, length = preprocess(image)
-        if length != 0:
-            (x, y, w, h) = faceRects[0]
-            gray_face = gray[(y):(y + h), (x):(x + w)]
-            gray_face = cv2.resize(gray_face, (48, 48))
-            gray_face = gray_face / 255.0
-            gray_face = np.expand_dims(gray_face, 0)
-            gray_face = np.expand_dims(gray_face, -1)
-            global emo
-            custom = emo.emotion_classifier.predict(gray_face)
-            line_results.append(custom[0].tolist())
+        count += 1
+        if count % 5 == 0:
+            gray, faceRects, length = preprocess(image)
+            if length != 0:
+                (x, y, w, h) = faceRects[0]
+                gray_face = gray[(y):(y + h), (x):(x + w)]
+                gray_face = cv2.resize(gray_face, (48, 48))
+                gray_face = gray_face / 255.0
+                gray_face = np.expand_dims(gray_face, 0)
+                gray_face = np.expand_dims(gray_face, -1)
+                global emo
+                custom = emo.emotion_classifier.predict(gray_face)
+                line_results.append(custom[0].tolist())
 
     leng = len(line_results)
     temp = np.array(line_results)
