@@ -8,6 +8,7 @@ function onInputFileChange() {
     document.getElementById("audio_id").src = url;
 }
 ctx = canvas.getContext("2d");
+var int=self.setInterval("capture()",2000);
 function capture(){
     ctx.drawImage(audio_id, 0, 0, 400, 300);
     var imageData = canvas.toDataURL();
