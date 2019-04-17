@@ -88,8 +88,9 @@ def video_analysis():
 
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
-    imageData = request.data
-    img_b64decode = base64.b64decode(imageData) # base64解码
+    imageData = request.form.get('imageData').split(',')[1]
+    print(imageData)
+    img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.COLOR_BGR2RGB) # 转换Opencv格式
     global image
