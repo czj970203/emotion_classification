@@ -6,6 +6,7 @@ from app import app
 from app.backend import cv_capture
 import keras
 import numpy as np
+import base64
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -88,16 +89,19 @@ def video_analysis():
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
     imageData = request.data
-    img = np.array(imageData).reshape(768, 1366)
+    img_b64decode = base64.b64decode(imageData) # base64解码
+    img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
+    img = cv2.imdecode(img_array, cv2.COLOR_BGR2RGB) # 转换Opencv格式
     global image
     #暂存原图
     image = img
-    img = cv_capture.discern(img)
+    data = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
     address = 'static/images/cached_video_images.jpg'
     cv2.imwrite(write_path, img)
     global is_uploaded
     is_uploaded = True
-    imageData = bytearray(img)
+    return_img = cv2.imencode('.jpg', img) //转换成图片
+    imageData = base64.b64encode(return_img) //图片转换成base64
     return imageData
