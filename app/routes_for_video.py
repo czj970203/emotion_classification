@@ -84,6 +84,7 @@ def video_analysis():
     is_uploaded=False
     return render_template('video.html', address=address, bar_addrs=bar_addrs, is_uploaded=is_uploaded)
 
+
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
     imageData = request.data

@@ -18,13 +18,13 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 #初始化摄像头
-cap = ''
+cap = VideoCamera()
 #原始图片
 image = ''
 #是否停止传帧
-is_stopped = True
+is_stopped = False
 #是否关闭摄像头
-is_closed = True
+is_closed = False
 #是否上传图片至网页
 is_uploaded = False
 #是否开始截取视频

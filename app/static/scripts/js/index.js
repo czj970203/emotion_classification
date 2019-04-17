@@ -116,7 +116,7 @@ function getBarData() {
             if (data != null) {
 
                 option1.series[0].data = data['data'];
-                window.setTimeout(chart1.setOption(option1), 500);
+                window.setTimeout(chart1.setOption(option1), 1000);
 
             } else {
                 alert('信息获取失败');
@@ -140,7 +140,7 @@ function getLineData(){
                 for(var i=0;i<7;i++){
                     option2.series[i].data = data['data'][i];
                 }
-                window.setTimeout(chart2.setOption(option2), 500);
+                window.setTimeout(chart2.setOption(option2), 5000);
             }else{
                 alert('信息获取失败')
             }
