@@ -93,6 +93,7 @@ def catch_image():
     img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
+
     global image
     #暂存原图
     image = img
@@ -106,4 +107,6 @@ def catch_image():
     ret,return_img = cv2.imencode('.jpg', img).tobytes()  //转换成图片
     imageData = base64.b64encode(return_img) //图片转换成base64
     return url+','+imageData
+
+
 
