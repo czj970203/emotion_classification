@@ -87,8 +87,10 @@ def video_analysis():
 
 @app.route('/catch_image', methods=['GET', 'POST'])
 def catch_image():
-    imageData = request.form.get('imageData')
-    print(imageData == None)
+    imageData = request.data
+    global image
+    #暂存原图
+    image = imageData
     img = cv_capture.discern(imageData)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
