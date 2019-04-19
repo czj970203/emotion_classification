@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>视频</title>
+    <script src="../static/scripts/js/echarts.js" type="text/javascript"></script>
     <script src="../static/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 </head>
 <body>
@@ -13,22 +14,14 @@
         <a href="{{ url_for('index') }}">摄像头</a>
     </div>
     <hr />
-    <img src="{{ url_for('video_play') }}" width="60%" height="40%" alt="请选择视频">
     <input type="file" id="file" onchange="onInputFileChange()">
     <video id="audio_id" controls autoplay loop width="60%" height="40%">Your browser can't support HTML5 Audio</video>
-    <button onclick="capture()">抓图</button>
-    <canvas id="canvas" width="400" height="300" hidden></canvas>
+    <button onclick="start()">开始</button>
+    <button onclick="stop()">结束</button>
+    <canvas id="canvas" width="400" height="300" ></canvas>
     <img src="" id="img" width="400" height="300">
-    <button><a href="{{ url_for('catch') }}">截取屏幕</a></button>
-    {% if is_uploaded %}
-    <button><a href="{{ url_for('video_analysis') }}">分析表达力</a></button>
-    {% endif %}
-    <img src="{{ address }}" width="50%" height="40%" alt="正在识别表情">
-    {% if bar_addrs %}
-    {% for bar_addr in bar_addrs %}
-    <img src="{{ bar_addr }}" width="50%" height="40%" alt="无识别目标">
-    {% endfor %}
-    {% endif %}
+    <div id="bar" style="width: 600px;height: 400px"></div>
+    <div id="line" style="width: 600px;height: 400px"></div>
     <script src="../static/scripts/js/video.js" type="text/javascript"></script>
 </body>
 </html>

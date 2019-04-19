@@ -93,7 +93,6 @@ def catch_image():
     img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
-    print(img)
     global image
     #暂存原图
     image = img
@@ -109,4 +108,13 @@ def catch_image():
     imageData = base64.b64encode(return_img) #图片转换成base64
     return url + ',' + str(imageData,encoding='utf-8')
 
+@app.route('/return_video_bar', methods=['POST', 'GET'])
+def return_video_bar():
+    imageData = request.form.get('imageData').split(',')[1]
+    img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
+    img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
+    img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
+    bar_data = cv_capture.process_bar_chart(img)
+    bar_result = jsonify({'data': bar_data})
+    return bar_result
 
