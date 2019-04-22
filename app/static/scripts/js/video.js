@@ -130,6 +130,7 @@ function capture(){
     $.ajax({
         url: '/return_video_bar',
         type: 'post',
+        data: {'imageData':imageData},
         dataType: 'json',
         success: function (data) {
             if (data != null) {
@@ -158,5 +159,5 @@ function stop() {
     window.setTimeout(chart2.setOption(option2), 5000);
 }
 function start() {
-    int = setInterval("capture()",5000);
+    int = window.setInterval(capture, 500);
 }

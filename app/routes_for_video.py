@@ -1,7 +1,7 @@
 import os
 import time
 import cv2
-from flask import render_template, Response,request
+from flask import render_template, Response,request,jsonify
 from app import app
 from app.backend import cv_capture
 import keras
@@ -107,6 +107,7 @@ def catch_image():
     return_img = return_img.tobytes()
     imageData = base64.b64encode(return_img) #图片转换成base64
     return url + ',' + str(imageData,encoding='utf-8')
+
 
 @app.route('/return_video_bar', methods=['POST', 'GET'])
 def return_video_bar():
