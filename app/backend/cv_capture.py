@@ -76,8 +76,8 @@ def get_processed_frame(image):
         custom = emo.emotion_classifier.predict(gray_face)
         emotion_label_arg = np.argmax(custom)
         emotion = emotion_labels[emotion_label_arg]
-        score = round(round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 100, 1)
-        cv2.putText(image, '%s' % (emotion), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
+    #    score = round(round(custom[0][emotion_label_arg] / np.sum(custom[0]), 2) * 100, 1)
+        cv2.putText(image, '%s' % (i), (x + 30, y + 20), font, 1, (255, 0, 255), 4)
     ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
 
@@ -120,7 +120,7 @@ def process_line_chart(images):
     count = 0
     for image in images:
         count += 1
-        if count % 5 == 0:
+        if count % 2 == 0:
             gray, faceRects, length = preprocess(image)
             if length != 0:
                 (x, y, w, h) = faceRects[0]
@@ -145,16 +145,21 @@ def process_bar_chart(image):
     global cached_bar_data
     gray, faceRects, length = preprocess(image)
     if length != 0:
-        (x, y, w, h) = faceRects[0]
-        gray_face = gray[(y):(y + h), (x):(x + w)]
-        gray_face = cv2.resize(gray_face, (48, 48))
-        gray_face = gray_face / 255.0
-        gray_face = np.expand_dims(gray_face, 0)
-        gray_face = np.expand_dims(gray_face, -1)
-        global emo
-        custom = emo.emotion_classifier.predict(gray_face)
-        cached_bar_data = custom[0].tolist()
-    return cached_bar_data
+        if length > 4:
+            length = 4
+        curr = []
+        for i in range(length):
+            (x, y, w, h) = faceRects[i]
+            gray_face = gray[(y):(y + h), (x):(x + w)]
+            gray_face = cv2.resize(gray_face, (48, 48))
+            gray_face = gray_face / 255.0
+            gray_face = np.expand_dims(gray_face, 0)
+            gray_face = np.expand_dims(gray_face, -1)
+            global emo
+            custom = emo.emotion_classifier.predict(gray_face)
+            curr.append(custom[0].tolist())
+        cached_bar_data = curr
+    return length, cached_bar_data
 
 
 

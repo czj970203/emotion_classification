@@ -29,7 +29,7 @@ def video():
 
 def gen():
     while True:
-        global num
+        global num, cap
         num = num + 1
         success,frame = cap.read()
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg

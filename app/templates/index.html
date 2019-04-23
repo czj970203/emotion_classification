@@ -20,7 +20,6 @@
         <button><a href="{{ url_for('open_video') }}">开启摄像头</a></button>
         {% else %}
         <button><a href="{{ url_for('close_video') }}">关闭摄像头</a></button>
-        <button><a href="{{ url_for('analysis') }}">截取屏幕</a></button>
         <button><a href="{{ url_for('collect_frames') }}">开始录制</a></button>
         {% if start_collect %}
         <button><a href="{{ url_for('stop_collect') }}">结束录制</a></button>

@@ -5,7 +5,7 @@ from flask import render_template, Response, jsonify
 from app import app
 from app.backend import cv_capture
 from app.models import VideoCamera
-
+import gc
 
 #用keras自带的后端来清理缓存，不能用tensorflow的！！！
 import keras
@@ -163,9 +163,13 @@ def feed_video_clips():
 @app.route('/return_bar', methods=['POST', 'GET'])
 def return_bar():
     global cap
-    ret, img = cap.read()
-    bar_data = cv_capture.process_bar_chart(img)
-    bar_result = jsonify({'data': bar_data})
+    gc.collect()
+    if not is_closed:
+        ret, img = cap.read()
+        length, bar_data = cv_capture.process_bar_chart(img)
+        bar_result = jsonify({'data': bar_data})
+    else:
+        bar_result = jsonify({'data': 'camera closed.'})
     return bar_result
 
 

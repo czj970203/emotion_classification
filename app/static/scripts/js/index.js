@@ -113,13 +113,10 @@ function getBarData() {
         type: 'post',
         dataType: 'json',
         success: function (data) {
-            if (data != null) {
-
-                option1.series[0].data = data['data'];
+            if (data['data'] != 'camera closed.') {
+                option1.series[0].data = data['data'][0];
                 window.setTimeout(chart1.setOption(option1), 1000);
 
-            } else {
-                alert('信息获取失败');
             }
         },
         error: function (data) {
@@ -128,7 +125,7 @@ function getBarData() {
     });
 }
 
-window.setInterval(getBarData, 500)
+window.setInterval(getBarData, 1500);
 
 function getLineData(){
     $.ajax({
