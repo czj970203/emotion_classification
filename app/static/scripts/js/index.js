@@ -5,7 +5,7 @@
 var chart1 = echarts.init(document.getElementById('bar'));
 var option1 = {
     title : {
-        text : ''
+        text : '1号人脸'
     },
     tooltip : {
         trigger : 'axis',
@@ -39,9 +39,18 @@ var option1 = {
     ]
 };
 
+var chart2 = echarts.init(document.getElementById('bar2'));
+var option2 = option1;
+option2.title.text = '2号人脸';
+var chart3 = echarts.init(document.getElementById('bar3'));
+var option3 = option1;
+option3.title.text = '3号人脸';
+var chart4 = echarts.init(document.getElementById('bar4'));
+var option4 = option1;
+option4.title.text = '4号人脸';
 
-var chart2 = echarts.init(document.getElementById('line'));
-var option2 = {
+var chart5 = echarts.init(document.getElementById('line'));
+var option5 = {
     title : {
         text : ''
     },
@@ -103,8 +112,6 @@ var option2 = {
         }
     ]
 };
-chart1.setOption(option1);
-chart2.setOption(option2);
 
 
 function getBarData() {
@@ -114,9 +121,58 @@ function getBarData() {
         dataType: 'json',
         success: function (data) {
             if (data['data'] != 'camera closed.') {
-                option1.series[0].data = data['data'][0];
-                window.setTimeout(chart1.setOption(option1), 1000);
-
+                var len = data['data'].length;
+                switch(len){
+                    case 1:
+                        option1.series[0].data = data['data'][0];
+                        window.setTimeout(chart1.setOption(option1), 1000);
+                        document.getElementById('bar').style.display = 'block';
+                        document.getElementById('bar2').style.display = 'none';
+                        document.getElementById('bar3').style.display = 'none';
+                        document.getElementById('bar4').style.display = 'none';
+                        break;
+                    case 2:
+                        option1.series[0].data = data['data'][0];
+                        window.setTimeout(chart1.setOption(option1), 1000);
+                        option2.series[0].data = data['data'][1];
+                        window.setTimeout(chart2.setOption(option2), 1000);
+                        document.getElementById('bar').style.display = 'block';
+                        document.getElementById('bar2').style.display = 'block';
+                        document.getElementById('bar3').style.display = 'none';
+                        document.getElementById('bar4').style.display = 'none';
+                        break;
+                    case 3:
+                        option1.series[0].data = data['data'][0];
+                        window.setTimeout(chart1.setOption(option1), 1000);
+                        option2.series[0].data = data['data'][1];
+                        window.setTimeout(chart2.setOption(option2), 1000);
+                        option3.series[0].data = data['data'][2];
+                        window.setTimeout(chart3.setOption(option3), 1000);
+                        document.getElementById('bar').style.display = 'block';
+                        document.getElementById('bar2').style.display = 'block';
+                        document.getElementById('bar3').style.display = 'block';
+                        document.getElementById('bar4').style.display = 'none';
+                        break;
+                    case 4:
+                        option1.series[0].data = data['data'][0];
+                        window.setTimeout(chart1.setOption(option1), 1000);
+                        option2.series[0].data = data['data'][1];
+                        window.setTimeout(chart2.setOption(option2), 1000);
+                        option3.series[0].data = data['data'][2];
+                        window.setTimeout(chart3.setOption(option3), 1000);
+                        option4.series[0].data = data['data'][3];
+                        window.setTimeout(chart4.setOption(option4), 1000);
+                        document.getElementById('bar').style.display = 'block';
+                        document.getElementById('bar2').style.display = 'block';
+                        document.getElementById('bar3').style.display = 'block';
+                        document.getElementById('bar4').style.display = 'block';
+                        break;
+                    default :
+                        document.getElementById('bar').style.display = 'none';
+                        document.getElementById('bar2').style.display = 'none';
+                        document.getElementById('bar3').style.display = 'none';
+                        document.getElementById('bar4').style.display = 'none';
+                }
             }
         },
         error: function (data) {
@@ -135,9 +191,9 @@ function getLineData(){
         success: function(data){
             if(data != null){
                 for(var i=0;i<7;i++){
-                    option2.series[i].data = data['data'][i];
+                    option5.series[i].data = data['data'][i];
                 }
-                window.setTimeout(chart2.setOption(option2), 5000);
+                window.setTimeout(chart5.setOption(option5), 5000);
             }else{
                 alert('信息获取失败')
             }
