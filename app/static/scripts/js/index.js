@@ -34,6 +34,11 @@ var option1 = {
         {
             name : '表情力',
             type : 'bar',
+            itemstyle :{
+                normal : {
+                    color : '#b53028'
+                }
+            },
             data : []
         }
     ]
@@ -49,7 +54,7 @@ var option2 = {
         axisPointer : {
             type : 'cross',
             label : {
-                backgroundColor: '#d5b020'
+                backgroundColor: '#283b56'
             }
         }
     },
@@ -71,6 +76,11 @@ var option2 = {
         {
             name : '表情力',
             type : 'bar',
+            itemstyle :{
+                normal : {
+                    color : '#d5b020'
+                }
+            },
             data : []
         }
     ]
@@ -86,7 +96,7 @@ var option3 = {
         axisPointer : {
             type : 'cross',
             label : {
-                backgroundColor: '#18cc42'
+                backgroundColor: '#283b56'
             }
         }
     },
@@ -108,6 +118,11 @@ var option3 = {
         {
             name : '表情力',
             type : 'bar',
+            itemstyle :{
+                normal : {
+                    color : '#18cc42'
+                }
+            },
             data : []
         }
     ]
@@ -123,7 +138,7 @@ var option4 = {
         axisPointer : {
             type : 'cross',
             label : {
-                backgroundColor: '#4243d9'
+                backgroundColor: '#283b56'
             }
         }
     },
@@ -145,6 +160,11 @@ var option4 = {
         {
             name : '表情力',
             type : 'bar',
+            itemstyle :{
+                normal : {
+                    color : '#4243d9'
+                }
+            },
             data : []
         }
     ]
