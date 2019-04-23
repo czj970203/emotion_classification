@@ -40,14 +40,116 @@ var option1 = {
 };
 
 var chart2 = echarts.init(document.getElementById('bar2'));
-var option2 = option1;
-option2.title.text = '2号人脸';
+var option2 = {
+    title : {
+        text : '2号人脸'
+    },
+    tooltip : {
+        trigger : 'axis',
+        axisPointer : {
+            type : 'cross',
+            label : {
+                backgroundColor: '#d5b020'
+            }
+        }
+    },
+    legend : {
+        data : ['表情力']
+    },
+    xAxis : {
+        type : 'value',
+        boundaryGap : [0.2, 0.2],
+        max : 1,
+        min : 0
+    },
+    yAxis : {
+        type : 'category',
+        boundaryGap : 'true',
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    series : [
+        {
+            name : '表情力',
+            type : 'bar',
+            data : []
+        }
+    ]
+};
+
 var chart3 = echarts.init(document.getElementById('bar3'));
-var option3 = option1;
-option3.title.text = '3号人脸';
+var option3 = {
+    title : {
+        text : '3号人脸'
+    },
+    tooltip : {
+        trigger : 'axis',
+        axisPointer : {
+            type : 'cross',
+            label : {
+                backgroundColor: '#18cc42'
+            }
+        }
+    },
+    legend : {
+        data : ['表情力']
+    },
+    xAxis : {
+        type : 'value',
+        boundaryGap : [0.2, 0.2],
+        max : 1,
+        min : 0
+    },
+    yAxis : {
+        type : 'category',
+        boundaryGap : 'true',
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    series : [
+        {
+            name : '表情力',
+            type : 'bar',
+            data : []
+        }
+    ]
+};
+
 var chart4 = echarts.init(document.getElementById('bar4'));
-var option4 = option1;
-option4.title.text = '4号人脸';
+var option4 = {
+    title : {
+        text : '4号人脸'
+    },
+    tooltip : {
+        trigger : 'axis',
+        axisPointer : {
+            type : 'cross',
+            label : {
+                backgroundColor: '#4243d9'
+            }
+        }
+    },
+    legend : {
+        data : ['表情力']
+    },
+    xAxis : {
+        type : 'value',
+        boundaryGap : [0.2, 0.2],
+        max : 1,
+        min : 0
+    },
+    yAxis : {
+        type : 'category',
+        boundaryGap : 'true',
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    series : [
+        {
+            name : '表情力',
+            type : 'bar',
+            data : []
+        }
+    ]
+};
+
 
 var chart5 = echarts.init(document.getElementById('line'));
 var option5 = {
@@ -126,7 +228,7 @@ function getBarData() {
                     case 1:
                         option1.series[0].data = data['data'][0];
                         window.setTimeout(chart1.setOption(option1), 1000);
-                        document.getElementById('bar').style.display = 'block';
+                        document.getElementById('bar').style.display = 'inline';
                         document.getElementById('bar2').style.display = 'none';
                         document.getElementById('bar3').style.display = 'none';
                         document.getElementById('bar4').style.display = 'none';
@@ -136,8 +238,8 @@ function getBarData() {
                         window.setTimeout(chart1.setOption(option1), 1000);
                         option2.series[0].data = data['data'][1];
                         window.setTimeout(chart2.setOption(option2), 1000);
-                        document.getElementById('bar').style.display = 'block';
-                        document.getElementById('bar2').style.display = 'block';
+                        document.getElementById('bar').style.display = 'inline';
+                        document.getElementById('bar2').style.display = 'inline';
                         document.getElementById('bar3').style.display = 'none';
                         document.getElementById('bar4').style.display = 'none';
                         break;
@@ -148,9 +250,9 @@ function getBarData() {
                         window.setTimeout(chart2.setOption(option2), 1000);
                         option3.series[0].data = data['data'][2];
                         window.setTimeout(chart3.setOption(option3), 1000);
-                        document.getElementById('bar').style.display = 'block';
-                        document.getElementById('bar2').style.display = 'block';
-                        document.getElementById('bar3').style.display = 'block';
+                        document.getElementById('bar').style.display = 'inline';
+                        document.getElementById('bar2').style.display = 'inline';
+                        document.getElementById('bar3').style.display = 'inline';
                         document.getElementById('bar4').style.display = 'none';
                         break;
                     case 4:
@@ -162,10 +264,10 @@ function getBarData() {
                         window.setTimeout(chart3.setOption(option3), 1000);
                         option4.series[0].data = data['data'][3];
                         window.setTimeout(chart4.setOption(option4), 1000);
-                        document.getElementById('bar').style.display = 'block';
-                        document.getElementById('bar2').style.display = 'block';
-                        document.getElementById('bar3').style.display = 'block';
-                        document.getElementById('bar4').style.display = 'block';
+                        document.getElementById('bar').style.display = 'inline';
+                        document.getElementById('bar2').style.display = 'inline';
+                        document.getElementById('bar3').style.display = 'inline';
+                        document.getElementById('bar4').style.display = 'inline';
                         break;
                     default :
                         document.getElementById('bar').style.display = 'none';
