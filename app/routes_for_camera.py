@@ -166,7 +166,7 @@ def return_bar():
     gc.collect()
     if not is_closed:
         ret, img = cap.read()
-        length, bar_data = cv_capture.process_bar_chart(img)
+        length, bar_data = cv_capture.process_bar_chart_multiple(img)
         bar_result = jsonify({'data': bar_data})
     else:
         bar_result = jsonify({'data': 'camera closed.'})

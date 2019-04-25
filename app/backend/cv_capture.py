@@ -27,7 +27,9 @@ emotion_labels = {
 }
 
 #暂存柱状图数据，以免未识别出人脸时报错
+cached_bar_data_multiple = []
 cached_bar_data = []
+
 
 
 def preprocess(img):
@@ -139,10 +141,25 @@ def process_line_chart(images):
     result = temp.tolist()
     return result
 
-
 #返回柱状图数据
 def process_bar_chart(image):
     global cached_bar_data
+    gray, faceRects, length = preprocess(image)
+    if length != 0:
+        (x, y, w, h) = faceRects[0]
+        gray_face = gray[(y):(y + h), (x):(x + w)]
+        gray_face = cv2.resize(gray_face, (48, 48))
+        gray_face = gray_face / 255.0
+        gray_face = np.expand_dims(gray_face, 0)
+        gray_face = np.expand_dims(gray_face, -1)
+        global emo
+        custom = emo.emotion_classifier.predict(gray_face)
+        cached_bar_data = custom[0].tolist()
+    return cached_bar_data
+
+#返回柱状图数据(多张人脸）
+def process_bar_chart_multiple(image):
+    global cached_bar_data_multiple
     gray, faceRects, length = preprocess(image)
     if length != 0:
         if length > 4:
@@ -158,8 +175,8 @@ def process_bar_chart(image):
             global emo
             custom = emo.emotion_classifier.predict(gray_face)
             curr.append(custom[0].tolist())
-        cached_bar_data = curr
-    return length, cached_bar_data
+        cached_bar_data_multiple = curr
+    return length, cached_bar_data_multiple
 
 
 
