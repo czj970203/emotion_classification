@@ -3,7 +3,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from app.models import EmotionClassifier
-
+import face_recognition
 
 #用keras自带的后端来清理缓存，不能用tensorflow的！！！
 import keras
@@ -52,7 +52,7 @@ def discern(img):
     for i in range(length):
         x, y, w, h = faceRects[i]
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
-        cv2.putText(img, str(i), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
+        cv2.putText(img, str(i + 1), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
     return img
 
 
@@ -117,12 +117,12 @@ def emotion_analysis(emotions, i, file_path):
 
 
 #返回折线图数据
-def process_line_chart(images):
+def process_line_chart(images, seen_face_encodings):
     line_results = []
     count = 0
     for image in images:
         count += 1
-        if count % 2 == 0:
+        if count % 3 == 0:
             gray, faceRects, length = preprocess(image)
             if length != 0:
                 (x, y, w, h) = faceRects[0]
@@ -157,6 +157,7 @@ def process_bar_chart(image):
         cached_bar_data = custom[0].tolist()
     return cached_bar_data
 
+
 #返回柱状图数据(多张人脸）
 def process_bar_chart_multiple(image):
     global cached_bar_data_multiple
@@ -179,6 +180,11 @@ def process_bar_chart_multiple(image):
     return length, cached_bar_data_multiple
 
 
+#获取面部关键信息
+def get_key_face_info(img):
+    face_locations = face_recognition.face_locations(img)
+    face_encodings = face_recognition.face_encodings(img, face_locations)
+    return face_locations, face_encodings
 
 
 

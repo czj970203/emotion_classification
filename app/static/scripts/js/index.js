@@ -315,7 +315,7 @@ function getLineData(){
                 for(var i=0;i<7;i++){
                     option5.series[i].data = data['data'][i];
                 }
-                window.setTimeout(chart5.setOption(option5), 5000);
+                window.setTimeout(chart5.setOption(option5), 1000);
             }else{
                 alert('信息获取失败')
             }

@@ -6,7 +6,7 @@ from app import app
 from app.backend import cv_capture
 from app.models import VideoCamera
 import gc
-
+import face_recognition
 #用keras自带的后端来清理缓存，不能用tensorflow的！！！
 import keras
 
@@ -33,28 +33,46 @@ start_collect = False
 finish_collect = False
 #统计已传帧的数量
 frame_num = 0
+#统计已保存的人脸数据的数量
+seen_face_num = 0
 #收集帧
 collected_images = []
+#收集已保存的人脸数据
+seen_face_encodings = []
 
 
 @app.route('/')
 @app.route('/index')
 def index():
     # jinja2模板，具体格式保存在index.html文件中
-    return render_template('index.html', title="trial", is_closed=is_closed)
+    return render_template('index.html', title="Camera", is_closed=is_closed)
 
 
 def gen(camera):
-    global frame_num, collected_images
+    global frame_num, collected_images, seen_face_num
     while True:
         frame_num = (frame_num + 1) % 20
         ret, image = camera.read()
+        if seen_face_num < 4 and frame_num < 2:
+            face_locations, face_encodings = cv_capture.get_key_face_info(image)
+            face_num = len(face_locations)
+            for i in range(face_num):
+                if True not in face_recognition.compare_faces(seen_face_encodings, face_encodings[i], tolerance=0.5):
+                    seen_face_encodings.append(face_encodings[i])
+                    seen_face_num += 1
+                if seen_face_num >= 4:
+                    break
+            print(seen_face_num)
+
         if start_collect:
             collected_images.append(image)
-        if frame_num < 10:
+        if frame_num < 2:
             frame = camera.get_frame()
         else:
-            frame = cv_capture.get_processed_frame(image)
+            #frame = cv_capture.get_processed_frame(image)
+            temp = cv_capture.discern(image)
+            ret, jpeg = cv2.imencode('.jpg', temp)
+            frame = jpeg.tobytes()
 
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         yield (b'--frame\r\n'
@@ -176,7 +194,7 @@ def return_bar():
 @app.route('/return_line', methods=['POST', 'GET'])
 def return_line():
     global collected_images
-    line_data = cv_capture.process_line_chart(collected_images)
+    line_data = cv_capture.process_line_chart(collected_images, seen_face_encodings)
     line_result = jsonify({'data': line_data})
     return line_result
 
