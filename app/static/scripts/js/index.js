@@ -313,7 +313,7 @@ function getLineData(){
         success: function(data){
             if(data != null){
                 for(var i=0;i<7;i++){
-                    option5.series[i].data = data['data'][i];
+                    option5.series[i].data = data['data']['1'][i];
                 }
                 window.setTimeout(chart5.setOption(option5), 1000);
             }else{
