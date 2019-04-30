@@ -30,9 +30,6 @@
         {% if start_collect %}
         <button><a href="{{ url_for('stop_collect') }}">结束录制</a></button>
         {% endif %}
-        {% if is_uploaded %}
-        <button><a href="{{ url_for('gen_bar') }}">分析表达力</a></button>
-        {% endif %}
         {% if finish_collect %}
         <button onclick="getLineData()">绘制折线图</button>
         <img src="{{ url_for('feed_video_clips') }}" width="50%" height="40%" alt="请截取视频片段">

@@ -70,7 +70,7 @@ def gen(camera):
             frame = camera.get_frame()
         else:
             #frame = cv_capture.get_processed_frame(image)
-            temp = cv_capture.discern(image)
+            temp = cv_capture.discern(image, seen_face_encodings)
             ret, jpeg = cv2.imencode('.jpg', temp)
             frame = jpeg.tobytes()
 

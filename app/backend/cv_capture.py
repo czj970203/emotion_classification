@@ -44,15 +44,24 @@ def preprocess(img):
 
 
 # 图片识别方法封装
-def discern(img):
+def discern(img, seen_face_encodings):
     gray, faceRects, length = preprocess(img)
     font = cv2.FONT_HERSHEY_SIMPLEX  # 字体
-    if(length > 4):
-        length = 4
     for i in range(length):
         x, y, w, h = faceRects[i]
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
-        cv2.putText(img, str(i + 1), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
+        face_location = []
+        face_location.append((y, x + w, y + h, x))
+        face_encoding = face_recognition.face_encodings(img, face_location)
+        match_list = face_recognition.compare_faces(seen_face_encodings, face_encoding[0], tolerance=0.6)
+        if True in match_list:
+            # pos代表与哪张脸对应
+            pos = 100
+            for j in range(len(match_list)):
+                if match_list[j]:
+                    pos = j
+                    break
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
+            cv2.putText(img, str(pos + 1), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
     return img
 
 
@@ -131,15 +140,13 @@ def process_line_chart(images, seen_face_encodings):
                     face_location.append((y, x+w, y+h, x))
                     face_encoding = face_recognition.face_encodings(image, face_location)
                     match_list = face_recognition.compare_faces(seen_face_encodings, face_encoding[0], tolerance=0.6)
-                    
                     if True in match_list:
                         #pos代表与哪张脸对应
-                        pos = 10
+                        pos = 100
                         for j in range(len(match_list)):
                             if match_list[j]:
                                 pos = j
                                 break
-                        print("position is: " + str(pos))
                         gray_face = gray[(y):(y + h), (x):(x + w)]
                         gray_face = cv2.resize(gray_face, (48, 48))
                         gray_face = gray_face / 255.0
