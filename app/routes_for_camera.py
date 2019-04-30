@@ -49,7 +49,7 @@ def index():
 
 
 def gen(camera):
-    global frame_num, collected_images, seen_face_num
+    global frame_num, collected_images, seen_face_num, seen_face_encodings
     while True:
         frame_num = (frame_num + 1) % 20
         ret, image = camera.read()
@@ -62,7 +62,7 @@ def gen(camera):
                     seen_face_num += 1
                 if seen_face_num >= 4:
                     break
-            print(seen_face_num)
+            print(len(seen_face_encodings))
 
         if start_collect:
             collected_images.append(image)

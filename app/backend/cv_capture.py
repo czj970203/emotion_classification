@@ -131,13 +131,15 @@ def process_line_chart(images, seen_face_encodings):
                     face_location.append((y, x+w, y+h, x))
                     face_encoding = face_recognition.face_encodings(image, face_location)
                     match_list = face_recognition.compare_faces(seen_face_encodings, face_encoding[0], tolerance=0.6)
+                    
                     if True in match_list:
                         #pos代表与哪张脸对应
                         pos = 10
-                        for i in range(len(match_list)):
-                            if match_list[i]:
-                                pos = i
+                        for j in range(len(match_list)):
+                            if match_list[j]:
+                                pos = j
                                 break
+                        print("position is: " + str(pos))
                         gray_face = gray[(y):(y + h), (x):(x + w)]
                         gray_face = cv2.resize(gray_face, (48, 48))
                         gray_face = gray_face / 255.0
