@@ -14,9 +14,13 @@ cap = ''
 
 #原始图片
 image = ''
+#已传帧的数量
 num = 0
 is_uploaded = False
-
+#统计已保存的人脸数据的数量
+local_face_num = 0
+#收集已保存的人脸数据
+local_face_encodings = []
 @app.route('/video')
 def video():
     global cap
@@ -96,6 +100,16 @@ def catch_image():
     global image
     #暂存原图
     image = img
+    if local_face_num < 4 :
+        face_locations, face_encodings = cv_capture.get_key_face_info(image)
+        face_num = len(face_locations)
+        for i in range(face_num):
+            if True not in face_recognition.compare_faces(local_face_encodings, face_encodings[i], tolerance=0.5):
+                local_face_encodings.append(face_encodings[i])
+                local_face_num += 1
+            if local_face_num >= 4:
+                break
+        print(seen_face_num)
     data = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
@@ -115,7 +129,21 @@ def return_video_bar():
     img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
-    bar_data = cv_capture.process_bar_chart(img)
+    length, bar_data = cv_capture.process_bar_chart_multiple(img)
     bar_result = jsonify({'data': bar_data})
     return bar_result
 
+@app.route('/return_video_line', methods=['POST', 'GET'])
+def return_video_line():
+    imageData = request.form.get('imageData').split(',')[1]
+    img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
+    img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
+    img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
+    face_locations, face_encodings = cv_capture.get_key_face_info(image)
+    length, bar_data = cv_capture.process_bar_chart_multiple(img)
+    return_data = {
+        'locations' : face_locations,
+        'data': bar_data,
+    }
+    bar_result = jsonify(return_data)
+    return bar_result
