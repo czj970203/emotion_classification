@@ -457,56 +457,38 @@ function capture(){
         success: function (data) {
             if (data['data'].length != 0) {
                 var len = data['data'].length;
-                switch(len){
-                    case 1:
-                        option1.series[0].data = data['data'][0];
-                        window.setTimeout(chart1.setOption(option1), 1000);
-                        document.getElementById('bar').style.display = 'inline';
-                        document.getElementById('bar2').style.display = 'none';
-                        document.getElementById('bar3').style.display = 'none';
-                        document.getElementById('bar4').style.display = 'none';
-                        break;
-                    case 2:
-                        option1.series[0].data = data['data'][0];
-                        window.setTimeout(chart1.setOption(option1), 1000);
-                        option2.series[0].data = data['data'][1];
-                        window.setTimeout(chart2.setOption(option2), 1000);
-                        document.getElementById('bar').style.display = 'inline';
-                        document.getElementById('bar2').style.display = 'inline';
-                        document.getElementById('bar3').style.display = 'none';
-                        document.getElementById('bar4').style.display = 'none';
-                        break;
-                    case 3:
-                        option1.series[0].data = data['data'][0];
-                        window.setTimeout(chart1.setOption(option1), 1000);
-                        option2.series[0].data = data['data'][1];
-                        window.setTimeout(chart2.setOption(option2), 1000);
-                        option3.series[0].data = data['data'][2];
-                        window.setTimeout(chart3.setOption(option3), 1000);
-                        document.getElementById('bar').style.display = 'inline';
-                        document.getElementById('bar2').style.display = 'inline';
-                        document.getElementById('bar3').style.display = 'inline';
-                        document.getElementById('bar4').style.display = 'none';
-                        break;
-                    case 4:
-                        option1.series[0].data = data['data'][0];
-                        window.setTimeout(chart1.setOption(option1), 1000);
-                        option2.series[0].data = data['data'][1];
-                        window.setTimeout(chart2.setOption(option2), 1000);
-                        option3.series[0].data = data['data'][2];
-                        window.setTimeout(chart3.setOption(option3), 1000);
-                        option4.series[0].data = data['data'][3];
-                        window.setTimeout(chart4.setOption(option4), 1000);
-                        document.getElementById('bar').style.display = 'inline';
-                        document.getElementById('bar2').style.display = 'inline';
-                        document.getElementById('bar3').style.display = 'inline';
-                        document.getElementById('bar4').style.display = 'inline';
-                        break;
-                    default :
-                        document.getElementById('bar').style.display = 'none';
-                        document.getElementById('bar2').style.display = 'none';
-                        document.getElementById('bar3').style.display = 'none';
-                        document.getElementById('bar4').style.display = 'none';
+                if(len == 4){
+                    option4.series[0].data = data['data'][3];
+                    window.setTimeout(chart4.setOption(option4), 1000);
+                    document.getElementById('bar4').style.display = 'inline';
+                    len = len -1;
+                }else{
+                    document.getElementById('bar4').style.display = 'none';
+
+                }
+                if(len == 3){
+                    option3.series[0].data = data['data'][2];
+                    window.setTimeout(chart3.setOption(option3), 1000);
+                    document.getElementById('bar3').style.display = 'inline';
+                    len = len -1;
+                }else{
+                    document.getElementById('bar3').style.display = 'none';
+                }
+                if(len == 2){
+                    option2.series[0].data = data['data'][1];
+                    window.setTimeout(chart2.setOption(option2), 1000);
+                    document.getElementById('bar2').style.display = 'inline';
+                    len = len -1;
+                }else{
+                    document.getElementById('bar2').style.display = 'none';
+                }
+                if(len == 1){
+                    option1.series[0].data = data['data'][0];
+                    window.setTimeout(chart1.setOption(option1), 1000);
+                    document.getElementById('bar').style.display = 'inline';
+                    len = len -1;
+                }else{
+                    document.getElementById('bar').style.display = 'none';
                 }
             } else {
                 alert('信息获取失败');
@@ -528,6 +510,7 @@ function capture(){
                 if(index0 != -1){
                     for(var i=0;i<7;i++){
                         option5.series[i].data.push(data['data'][index][i]);
+                        window.setTimeout(chart5.setOption(option5), 1000);
                     }
                 }
                 var index1 = data['locations'].indexOf(1);
@@ -535,6 +518,8 @@ function capture(){
                     index += 1;
                     for(var i=0;i<7;i++){
                         option6.series[i].data.push(data['data'][index][i]);
+                        window.setTimeout(chart6.setOption(option6), 1000);
+
                     }
                 }
                 var index2 = data['locations'].indexOf(2);
@@ -542,6 +527,7 @@ function capture(){
                     index += 1;
                     for(var i=0;i<7;i++){
                         option7.series[i].data.push(data['data'][index][i]);
+                        window.setTimeout(chart7.setOption(option7), 1000);
                     }
                 }
                 var index3 = data['locations'].indexOf(3);
@@ -549,6 +535,8 @@ function capture(){
                     index += 1;
                     for(var i=0;i<7;i++){
                         option8.series[i].data.push(data['data'][index][i]);
+                        window.setTimeout(chart8.setOption(option8), 1000);
+
                     }
                 }
             }else {
