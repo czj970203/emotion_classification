@@ -6,6 +6,7 @@ from app import app
 from app.backend import cv_capture
 import keras
 import numpy as np
+import face_recognition
 import base64
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -38,9 +39,10 @@ def gen():
         success,frame = cap.read()
         # 使用generator函数输出视频流， 每次请求输出的content类型是image/jpeg
         if(num % 20 <= 10):
-            jpeg = cv_capture.get_processed_frame(frame)
+            img = cv_capture.discern(frame, local_face_encodings)
+            ret, jpeg = cv2.imencode('.jpg', img)
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg + b'\r\n\r\n')
+                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
         else:
             ret, jpeg = cv2.imencode('.jpg', frame)
             yield (b'--frame\r\n'
@@ -97,7 +99,7 @@ def catch_image():
     img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
-    global image
+    global image, local_face_num, local_face_encodings
     #暂存原图
     image = img
     if local_face_num < 4 :
@@ -109,8 +111,8 @@ def catch_image():
                 local_face_num += 1
             if local_face_num >= 4:
                 break
-        print(seen_face_num)
-    data = cv_capture.discern(img)
+        print(local_face_num)
+    data = cv_capture.discern(img, local_face_encodings)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
     address = 'static/images/cached_video_images.jpg'
