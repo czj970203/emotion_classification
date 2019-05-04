@@ -442,7 +442,7 @@ function capture(){
             if (data != null) {
                 document.getElementById('img').setAttribute('src',data)
             } else {
-                alert('信息获取失败');
+                alert('图片信息获取失败');
             }
         },
         error: function (data) {
@@ -491,7 +491,7 @@ function capture(){
                     document.getElementById('bar').style.display = 'none';
                 }
             } else {
-                alert('信息获取失败');
+                alert('柱状图信息获取失败');
             }
         },
         error: function (data) {
@@ -540,7 +540,7 @@ function capture(){
                     }
                 }
             }else {
-                alert('信息获取失败');
+                alert('折线图信息获取失败');
             }
         }
     })
@@ -549,11 +549,23 @@ function stop() {
     clearInterval(int)
     option1.series[0].data = [];
     window.setTimeout(chart1.setOption(option1), 1000);
-    for(var i=0;i<7;i++){
-        option2.series[i].data = [];
-    }
-    window.setTimeout(chart2.setOption(option2), 5000);
+    option2.series[0].data = [];
+    window.setTimeout(chart2.setOption(option2), 1000);
+    option3.series[0].data = [];
+    window.setTimeout(chart3.setOption(option3), 1000);
+    option4.series[0].data = [];
+    window.setTimeout(chart4.setOption(option4), 1000);
 }
 function start() {
-    int = window.setInterval(capture, 500);
+    for(var i=0;i<7;i++){
+        option5.series[i].data = [];
+        option6.series[i].data = [];
+        option7.series[i].data = [];
+        option8.series[i].data = [];
+    }
+    window.setTimeout(chart5.setOption(option5), 5000);
+    window.setTimeout(chart6.setOption(option6), 5000);
+    window.setTimeout(chart7.setOption(option7), 5000);
+    window.setTimeout(chart8.setOption(option8), 5000);
+    int = window.setInterval(capture, 2000);
 }
