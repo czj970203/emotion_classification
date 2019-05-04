@@ -109,7 +109,6 @@ def catch_image():
                 local_face_num += 1
             if local_face_num >= 4:
                 break
-        print(seen_face_num)
     data = cv_capture.discern(img)
     basedir = os.path.abspath(os.path.dirname(__file__))
     write_path = os.path.join(basedir, 'static/images/cached_video_images.jpg')
