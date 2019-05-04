@@ -142,11 +142,6 @@ def return_video_line():
     img_b64decode = base64.urlsafe_b64decode(imageData) # base64解码
     img_array = np.fromstring(img_b64decode, np.uint8)  # 转换np序列
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR) # 转换Opencv格式
-    face_locations, face_encodings = cv_capture.get_key_face_info(image)
-    length, bar_data = cv_capture.process_bar_chart_multiple(img)
-    return_data = {
-        'locations' : face_locations,
-        'data': bar_data,
-    }
-    bar_result = jsonify(return_data)
+    bar_data = cv_capture.process_single_line_chart(img,local_face_encodings)
+    bar_result = jsonify({'data': bar_data})
     return bar_result

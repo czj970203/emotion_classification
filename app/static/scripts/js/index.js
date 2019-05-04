@@ -235,6 +235,200 @@ var option5 = {
     ]
 };
 
+var chart6 = echarts.init(document.getElementById('line2'));
+var option6 = {
+    title : {
+        text : ''
+    },
+    tooltip : {
+        trigger : 'axis'
+    },
+    legend : {
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+
+    grid : {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : {
+        type : 'category',
+        boundaryGap : 'false',
+        data : []
+    },
+    yAxis : {
+        type : 'value'
+    },
+    series : [
+        {
+            name : 'angry',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'disgust',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'fear',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'happy',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'sad',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'surprise',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'neutral',
+            type : 'line',
+            data : []
+        }
+    ]
+};
+
+var chart7 = echarts.init(document.getElementById('line3'));
+var option7 = {
+    title : {
+        text : ''
+    },
+    tooltip : {
+        trigger : 'axis'
+    },
+    legend : {
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+
+    grid : {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : {
+        type : 'category',
+        boundaryGap : 'false',
+        data : []
+    },
+    yAxis : {
+        type : 'value'
+    },
+    series : [
+        {
+            name : 'angry',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'disgust',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'fear',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'happy',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'sad',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'surprise',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'neutral',
+            type : 'line',
+            data : []
+        }
+    ]
+};
+
+var chart8 = echarts.init(document.getElementById('line4'));
+var option8 = {
+    title : {
+        text : ''
+    },
+    tooltip : {
+        trigger : 'axis'
+    },
+
+    legend : {
+        data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+    },
+    grid : {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : {
+        type : 'category',
+        boundaryGap : 'false',
+        data : []
+    },
+    yAxis : {
+        type : 'value'
+    },
+    series : [
+        {
+            name : 'angry',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'disgust',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'fear',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'happy',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'sad',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'surprise',
+            type : 'line',
+            data : []
+        },
+        {
+            name : 'neutral',
+            type : 'line',
+            data : []
+        }
+    ]
+};
 
 function getBarData() {
     $.ajax({
@@ -312,10 +506,34 @@ function getLineData(){
         dataType: 'json',
         success: function(data){
             if(data != null){
-                for(var i=0;i<7;i++){
-                    option5.series[i].data = data['data']['1'][i];
+                if(data['data']['1'][0].length != 0) {
+                    document.getElementById('line').style.display = 'inline';
+                    for (var i = 0; i < 7; i++) {
+                        option5.series[i].data = data['data']['1'][i];
+                        window.setTimeout(chart5.setOption(option5), 1000);
+                    }
                 }
-                window.setTimeout(chart5.setOption(option5), 1000);
+                if(data['data']['2'][0].length != 0) {
+                    document.getElementById('line2').style.display = 'inline';
+                    for (var i = 0; i < 7; i++) {
+                        option6.series[i].data = data['data']['2'][i];
+                        window.setTimeout(chart6.setOption(option6), 1000);
+                    }
+                }
+                if(data['data']['3'][0].length != 0) {
+                    document.getElementById('line3').style.display = 'inline';
+                    for (var i = 0; i < 7; i++) {
+                        option7.series[i].data = data['data']['3'][i];
+                        window.setTimeout(chart7.setOption(option7), 1000);
+                    }
+                }
+                if(data['data']['4'][0].length != 0) {
+                    document.getElementById('line4').style.display = 'inline';
+                    for (var i = 0; i < 7; i++) {
+                        option8.series[i].data = data['data']['4'][i];
+                        window.setTimeout(chart8.setOption(option8), 1000);
+                    }
+                }
             }else{
                 alert('信息获取失败')
             }

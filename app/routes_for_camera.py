@@ -195,6 +195,7 @@ def return_bar():
 def return_line():
     global collected_images
     line_data = cv_capture.process_line_chart(collected_images, seen_face_encodings)
+    print(line_data)
     line_result = jsonify({'data': line_data})
     return line_result
 

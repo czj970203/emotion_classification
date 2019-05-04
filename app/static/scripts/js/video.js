@@ -243,6 +243,15 @@ var option6 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
+    toolbox : {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
     grid : {
         left: '3%',
         right: '4%',
@@ -307,6 +316,15 @@ var option7 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
+    toolbox : {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
     grid : {
         left: '3%',
         right: '4%',
@@ -367,6 +385,15 @@ var option8 = {
     },
     tooltip : {
         trigger : 'axis'
+    },
+    toolbox : {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
     },
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
@@ -504,43 +531,33 @@ function capture(){
         data: {'imageData':imageData},
         dataType: 'json',
         success: function (data) {
-            if(data['locations'].length != 0){
-                var index = 0;
-                var index0 = data['locations'].indexOf(0);
-                if(index0 != -1){
-                    for(var i=0;i<7;i++){
-                        option5.series[i].data.push(data['data'][index][i]);
-                        window.setTimeout(chart5.setOption(option5), 1000);
-                    }
+            if(data['data']['1'].length != 0){
+                document.getElementById('line').style.display = 'inline';
+                for(var i=0;i<7;i++){
+                    option5.series[i].data.push(data['data']['1'][i]);
+                    window.setTimeout(chart5.setOption(option5), 1000);
                 }
-                var index1 = data['locations'].indexOf(1);
-                if(index1 != -1){
-                    index += 1;
-                    for(var i=0;i<7;i++){
-                        option6.series[i].data.push(data['data'][index][i]);
-                        window.setTimeout(chart6.setOption(option6), 1000);
-
-                    }
+            }
+            if(data['data']['2'].length != 0){
+                document.getElementById('line2').style.display = 'inline';
+                for(var i=0;i<7;i++){
+                    option6.series[i].data.push(data['data']['2'][i]);
+                    window.setTimeout(chart6.setOption(option6), 1000);
                 }
-                var index2 = data['locations'].indexOf(2);
-                if(index2 != -1){
-                    index += 1;
-                    for(var i=0;i<7;i++){
-                        option7.series[i].data.push(data['data'][index][i]);
-                        window.setTimeout(chart7.setOption(option7), 1000);
-                    }
+            }
+            if(data['data']['3'].length != 0){
+                document.getElementById('line3').style.display = 'inline';
+                for(var i=0;i<7;i++){
+                    option7.series[i].data.push(data['data']['3'][i]);
+                    window.setTimeout(chart7.setOption(option7), 1000);
                 }
-                var index3 = data['locations'].indexOf(3);
-                if(index3 != -1){
-                    index += 1;
-                    for(var i=0;i<7;i++){
-                        option8.series[i].data.push(data['data'][index][i]);
-                        window.setTimeout(chart8.setOption(option8), 1000);
-
-                    }
+            }
+            if(data['data']['4'].length != 0){
+                document.getElementById('line4').style.display = 'inline';
+                for(var i=0;i<7;i++){
+                    option8.series[i].data.push(data['data']['4'][i]);
+                    window.setTimeout(chart8.setOption(option8), 1000);
                 }
-            }else {
-                alert('折线图信息获取失败');
             }
         }
     })
