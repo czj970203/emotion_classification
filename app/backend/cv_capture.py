@@ -61,7 +61,7 @@ def discern(img, seen_face_encodings):
                     pos = j
                     break
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
-            cv2.putText(img, str(pos + 1), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
+            cv2.putText(img, str(pos + 1)+'号人脸', (x + 20, y + 20), font, 2, (255, 0, 255), 4)
     return img
 
 
