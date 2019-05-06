@@ -182,6 +182,24 @@ var option5 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
+    axisPointer : {
+        show : true,
+        type : 'line'
+    },
+    datazoom : [
+        {
+            type : 'slider',
+            show : true,
+            realtime : true,
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        },
+        {
+            type : 'inside',
+            realtime : true
+        }
+    ],
     grid : {
         left: '3%',
         right: '4%',
