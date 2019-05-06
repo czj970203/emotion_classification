@@ -27,13 +27,12 @@
             </div>
     </nav>
     <hr />
-    <!--<input type="file" id="file" onchange="onInputFileChange()">-->
+    <input style="margin-left: 50px;margin-bottom: 20px" type="file" id="file" onchange="onInputFileChange()">
     <div class="text-center" style="margin-bottom: 50px">
         <video id="audio_id" controls autoplay loop style="width: 720px;height: 480px">Your browser can't support HTML5 Audio</video>
     </div>
 
     <div class="row" style="margin-left: 50px;margin-bottom: 50px">
-        <button type="button" class="btn btn-info" style="margin-right: 20px" onclick="onInputFileChange()">选择文件</button>
         <button type="button" class="btn btn-info" style="margin-right: 20px" onclick="start()">开始识别</button>
         <button type="button" class="btn btn-info" onclick="stop()">停止识别</button>
     </div>
