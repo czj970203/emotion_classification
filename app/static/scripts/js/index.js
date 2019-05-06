@@ -539,6 +539,12 @@ function getLineData(){
                 }
                 if(data['data']['2'][0].length != 0) {
                     document.getElementById('line2').style.display = 'inline';
+                    len = data['data']['2'][0].length;
+                    var xs = [];
+                    for(var j = 0;j < len; j++){
+                        xs[j] = j + 1;
+                    }
+                    option6.xAxis.data = xs;
                     for (var i = 0; i < 7; i++) {
                         option6.series[i].data = data['data']['2'][i];
                         window.setTimeout(chart6.setOption(option6), 1000);
@@ -546,6 +552,12 @@ function getLineData(){
                 }
                 if(data['data']['3'][0].length != 0) {
                     document.getElementById('line3').style.display = 'inline';
+                    len = data['data']['3'][0].length;
+                    var xs = [];
+                    for(var j = 0;j < len; j++){
+                        xs[j] = j + 1;
+                    }
+                    option7.xAxis.data = xs;
                     for (var i = 0; i < 7; i++) {
                         option7.series[i].data = data['data']['3'][i];
                         window.setTimeout(chart7.setOption(option7), 1000);
@@ -553,6 +565,12 @@ function getLineData(){
                 }
                 if(data['data']['4'][0].length != 0) {
                     document.getElementById('line4').style.display = 'inline';
+                    len = data['data']['4'][0].length;
+                    var xs = [];
+                    for(var j = 0;j < len; j++){
+                        xs[j] = j + 1;
+                    }
+                    option8.xAxis.data = xs;
                     for (var i = 0; i < 7; i++) {
                         option8.series[i].data = data['data']['4'][i];
                         window.setTimeout(chart8.setOption(option8), 1000);
