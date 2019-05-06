@@ -57,7 +57,7 @@ def gen(camera):
             face_locations, face_encodings = cv_capture.get_key_face_info(image)
             face_num = len(face_locations)
             for i in range(face_num):
-                if True not in face_recognition.compare_faces(seen_face_encodings, face_encodings[i], tolerance=0.6):
+                if True not in face_recognition.compare_faces(seen_face_encodings, face_encodings[i], tolerance=0.5):
                     seen_face_encodings.append(face_encodings[i])
                     seen_face_num += 1
                 if seen_face_num >= 4:
@@ -109,6 +109,7 @@ def close_video():
     while not is_stopped:
         pass
     cap.__del__()
+    gc.collect()
     return render_template('index.html', is_closed=is_closed)
 
 
