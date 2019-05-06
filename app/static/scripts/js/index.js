@@ -526,6 +526,12 @@ function getLineData(){
             if(data != null){
                 if(data['data']['1'][0].length != 0) {
                     document.getElementById('line').style.display = 'inline';
+                    len = data['data']['1'][0].length;
+                    var xs = [];
+                    for(var j = 0;j < len; j++){
+                        xs[j] = j + 1;
+                    }
+                    option5.xAxis.data = xs;
                     for (var i = 0; i < 7; i++) {
                         option5.series[i].data = data['data']['1'][i];
                         window.setTimeout(chart5.setOption(option5), 1000);

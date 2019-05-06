@@ -155,6 +155,8 @@ def process_line_chart(images, seen_face_encodings):
                         global emo
                         custom = emo.emotion_classifier.predict(gray_face)
                         prediction = custom[0].tolist()
+                        for j in range(len(prediction)):
+                            prediction[j] = round(prediction[j], 3)
                         line_results[str(pos + 1)].append(prediction)
     for k,v in line_results.items():
         leng = len(v)
