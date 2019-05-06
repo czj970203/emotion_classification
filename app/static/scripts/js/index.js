@@ -182,22 +182,23 @@ var option5 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-    axisPointer : {
-        show : true,
-        type : 'line'
-    },
     datazoom : [
         {
             type : 'slider',
             show : true,
             realtime : true,
+            xAxisIndex : [0],
             start : 0,
             end : 70,
             minSpan : 20,
         },
         {
             type : 'inside',
-            realtime : true
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
         }
     ],
     grid : {
@@ -209,7 +210,11 @@ var option5 = {
     xAxis : {
         type : 'category',
         boundaryGap : 'false',
-        data : []
+        data : [],
+        axisPointer : {
+            show : true,
+            type : 'line'
+        }
     },
     yAxis : {
         type : 'value'
@@ -264,7 +269,25 @@ var option6 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-
+    datazoom : [
+        {
+            type : 'slider',
+            show : true,
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        },
+        {
+            type : 'inside',
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        }
+    ],
     grid : {
         left: '3%',
         right: '4%',
@@ -274,7 +297,11 @@ var option6 = {
     xAxis : {
         type : 'category',
         boundaryGap : 'false',
-        data : []
+        data : [],
+        axisPointer : {
+            show : true,
+            type : 'line'
+        }
     },
     yAxis : {
         type : 'value'
@@ -329,7 +356,25 @@ var option7 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-
+    datazoom : [
+        {
+            type : 'slider',
+            show : true,
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        },
+        {
+            type : 'inside',
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        }
+    ],
     grid : {
         left: '3%',
         right: '4%',
@@ -339,7 +384,11 @@ var option7 = {
     xAxis : {
         type : 'category',
         boundaryGap : 'false',
-        data : []
+        data : [],
+        axisPointer : {
+            show : true,
+            type : 'line'
+        }
     },
     yAxis : {
         type : 'value'
@@ -395,6 +444,25 @@ var option8 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
+    datazoom : [
+        {
+            type : 'slider',
+            show : true,
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        },
+        {
+            type : 'inside',
+            realtime : true,
+            xAxisIndex : [0],
+            start : 0,
+            end : 70,
+            minSpan : 20,
+        }
+    ],
     grid : {
         left: '3%',
         right: '4%',
@@ -404,7 +472,11 @@ var option8 = {
     xAxis : {
         type : 'category',
         boundaryGap : 'false',
-        data : []
+        data : [],
+        axisPointer : {
+            show : true,
+            type : 'line'
+        }
     },
     yAxis : {
         type : 'value'
