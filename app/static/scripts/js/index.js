@@ -182,7 +182,7 @@ var option5 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-    datazoom : [
+    dataZoom : [
         {
             type : 'slider',
             show : true,
@@ -269,7 +269,7 @@ var option6 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-    datazoom : [
+    dataZoom : [
         {
             type : 'slider',
             show : true,
@@ -356,7 +356,7 @@ var option7 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-    datazoom : [
+    dataZoom : [
         {
             type : 'slider',
             show : true,
@@ -444,7 +444,7 @@ var option8 = {
     legend : {
         data : ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
     },
-    datazoom : [
+    dataZoom : [
         {
             type : 'slider',
             show : true,
