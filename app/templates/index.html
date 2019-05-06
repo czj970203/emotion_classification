@@ -25,15 +25,14 @@
             </div>
         </nav>
         <hr />
-        <div class="text-center">
-            <img src="{{ url_for('video_feed') }}"width="80%" height="60%" alt="请开启摄像头">
+        <div class="text-center" style="margin-bottom: 50px">
+            <img src="{{ url_for('video_feed') }}" style="width: 720px;height: 480px" alt="请开启摄像头">
         </div>
 
-
         {% if is_closed %}
-        <a href="{{ url_for('open_video') }}" class="btn btn-info" role="button">开启摄像头</a>
+        <a href="{{ url_for('open_video') }}" class="btn btn-info" role="button" style="margin-left: 50px">开启摄像头</a>
         {% else %}
-        <a href="{{ url_for('close_video') }}" class="btn btn-info" role="button">关闭摄像头</a>
+        <a href="{{ url_for('close_video') }}" class="btn btn-info" role="button" style="margin-left: 50px">关闭摄像头</a>
         <a href="{{ url_for('collect_frames') }}" class="btn btn-info" role="button">开始录制</a>
         {% if start_collect %}
         <a href="{{ url_for('stop_collect') }}" class="btn btn-info" role="button">结束录制</a>
@@ -41,28 +40,27 @@
         <button id="line_button" onclick="getLineData()" class="btn btn-info">绘制折线图</button>
         {% if not finish_collect %}
         <script type="text/javascript">
-            document.getElementById('line_button').disabled='disabled';
+            document.getElementById('line_button').disabled = 'disabled';
         </script>
         {% endif %}
 
-        <div class="row">
-            <div class="col-sm" id="bar" style="width: 300px;height: 250px;display: none;float: left"></div>
-            <div class="col-sm" id="bar2" style="width: 300px;height: 250px;display: none;float: left"></div>
-            <div class="col-sm" id="bar3" style="width: 300px;height: 250px;display: none;float: left"></div>
-            <div class="col-sm" id="bar4" style="width: 300px;height: 250px;display: none;float: left"></div>
+        <div class="row" style="margin-top: 50px;margin-bottom: 50px;margin-left: 50px">
+            <div class="col-md-3" id="bar" style="display: none;float: left"></div>
+            <div class="col-md-3" id="bar2" style="display: none;float: left"></div>
+            <div class="col-md-3" id="bar3" style="display: none;float: left"></div>
+            <div class="col-md-3" id="bar4" style="display: none;float: left"></div>
         </div>
-
         {% if finish_collect %}
         <div class="text-center">
             <img src="{{ url_for('feed_video_clips') }}" width="80%" height="60%" alt="请截取视频片段">
         </div>
         {% endif %}
         {% endif %}
-        <div>
-            <div id="line" style="width: 300px;height: 250px;display:none;float:left"></div>
-            <div id="line2" style="width: 300px;height: 250px;display:none;float:left"></div>
-            <div id="line3" style="width: 300px;height: 250px;display:none;float:left"></div>
-            <div id="line4" style="width: 300px;height: 250px;display:none;float:left"></div>
+        <div class="row" style="margin-top: 50px;margin-left: 50px">
+            <div id="line" class="col-md-3" style="display:none;float:left"></div>
+            <div id="line2" class="col-md-3" style="display:none;float:left"></div>
+            <div id="line3" class="col-md-3" style="display:none;float:left"></div>
+            <div id="line4" class="col-md-3" style="display:none;float:left"></div>
 
         </div>
 
