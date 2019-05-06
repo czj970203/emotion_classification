@@ -52,7 +52,7 @@ def discern(img, seen_face_encodings):
         face_location = []
         face_location.append((y, x + w, y + h, x))
         face_encoding = face_recognition.face_encodings(img, face_location)
-        match_list = face_recognition.compare_faces(seen_face_encodings, face_encoding[0], tolerance=0.6)
+        match_list = face_recognition.compare_faces(seen_face_encodings, face_encoding[0], tolerance=0.5)
         if True in match_list:
             # pos代表与哪张脸对应
             pos = 100
@@ -61,7 +61,7 @@ def discern(img, seen_face_encodings):
                     pos = j
                     break
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)  # 框出人脸
-            cv2.putText(img, str(pos + 1)+'号人脸', (x + 20, y + 20), font, 2, (255, 0, 255), 4)
+            cv2.putText(img, 'No. '+str(pos + 1), (x + 20, y + 20), font, 2, (255, 0, 255), 4)
     return img
 
 
